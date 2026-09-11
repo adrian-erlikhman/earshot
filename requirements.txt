@@ -1,0 +1,10 @@
+requests
+pandas
+numpy
+scipy
+scikit-learn
+matplotlib
+tqdm
+python-dotenv
+duckdb
+lxml
