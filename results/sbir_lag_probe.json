@@ -1,0 +1,274 @@
+{
+  "neural network": {
+    "defence_n": 1156,
+    "civilian_n": 535,
+    "defence_years": {
+      "1": 1987,
+      "5": 1987,
+      "25": 1989,
+      "100": 1991
+    },
+    "civilian_years": {
+      "1": 1988,
+      "5": 1989,
+      "25": 1990,
+      "100": 1995
+    }
+  },
+  "deep learning": {
+    "defence_n": 409,
+    "civilian_n": 292,
+    "defence_years": {
+      "1": 2012,
+      "5": 2013,
+      "25": 2017,
+      "100": 2019
+    },
+    "civilian_years": {
+      "1": 2011,
+      "5": 2015,
+      "25": 2018,
+      "100": 2020
+    }
+  },
+  "support vector machine": {
+    "defence_n": 48,
+    "civilian_n": 38,
+    "defence_years": {
+      "1": 1994,
+      "5": 2003,
+      "25": 2007,
+      "100": null
+    },
+    "civilian_years": {
+      "1": 1988,
+      "5": 2002,
+      "25": 2010,
+      "100": null
+    }
+  },
+  "hidden markov model": {
+    "defence_n": 50,
+    "civilian_n": 20,
+    "defence_years": {
+      "1": 1993,
+      "5": 1996,
+      "25": 2006,
+      "100": null
+    },
+    "civilian_years": {
+      "1": 1992,
+      "5": 1999,
+      "25": null,
+      "100": null
+    }
+  },
+  "convolutional nn": {
+    "defence_n": 130,
+    "civilian_n": 55,
+    "defence_years": {
+      "1": 1997,
+      "5": 2004,
+      "25": 2018,
+      "100": 2021
+    },
+    "civilian_years": {
+      "1": 2003,
+      "5": 2008,
+      "25": 2020,
+      "100": null
+    }
+  },
+  "recurrent nn / lstm": {
+    "defence_n": 34,
+    "civilian_n": 21,
+    "defence_years": {
+      "1": 1994,
+      "5": 2009,
+      "25": 2021,
+      "100": null
+    },
+    "civilian_years": {
+      "1": 2005,
+      "5": 2018,
+      "25": null,
+      "100": null
+    }
+  },
+  "reinforcement learning": {
+    "defence_n": 143,
+    "civilian_n": 43,
+    "defence_years": {
+      "1": 1995,
+      "5": 1997,
+      "25": 2007,
+      "100": 2022
+    },
+    "civilian_years": {
+      "1": 1990,
+      "5": 2008,
+      "25": 2020,
+      "100": null
+    }
+  },
+  "random forest": {
+    "defence_n": 8,
+    "civilian_n": 14,
+    "defence_years": {
+      "1": 2013,
+      "5": 2020,
+      "25": null,
+      "100": null
+    },
+    "civilian_years": {
+      "1": 2004,
+      "5": 2014,
+      "25": null,
+      "100": null
+    }
+  },
+  "word embedding": {
+    "defence_n": 62,
+    "civilian_n": 51,
+    "defence_years": {
+      "1": 1987,
+      "5": 1994,
+      "25": 2008,
+      "100": null
+    },
+    "civilian_years": {
+      "1": 1988,
+      "5": 1993,
+      "25": 2011,
+      "100": null
+    }
+  },
+  "generative adversarial": {
+    "defence_n": 678,
+    "civilian_n": 273,
+    "defence_years": {
+      "1": 1990,
+      "5": 1992,
+      "25": 1995,
+      "100": 2001
+    },
+    "civilian_years": {
+      "1": 1987,
+      "5": 1997,
+      "25": 2003,
+      "100": 2012
+    }
+  },
+  "attention mechanism": {
+    "defence_n": 8,
+    "civilian_n": 3,
+    "defence_years": {
+      "1": 1992,
+      "5": 2016,
+      "25": null,
+      "100": null
+    },
+    "civilian_years": {
+      "1": 1994,
+      "5": null,
+      "25": null,
+      "100": null
+    }
+  },
+  "transformer": {
+    "defence_n": 83,
+    "civilian_n": 106,
+    "defence_years": {
+      "1": 1984,
+      "5": 1987,
+      "25": 2001,
+      "100": null
+    },
+    "civilian_years": {
+      "1": 1985,
+      "5": 1992,
+      "25": 2003,
+      "100": 2023
+    }
+  },
+  "bert": {
+    "defence_n": 4,
+    "civilian_n": 0,
+    "defence_years": {
+      "1": 1994,
+      "5": null,
+      "25": null,
+      "100": null
+    },
+    "civilian_years": {
+      "1": null,
+      "5": null,
+      "25": null,
+      "100": null
+    }
+  },
+  "gpt": {
+    "defence_n": 6,
+    "civilian_n": 4,
+    "defence_years": {
+      "1": 2020,
+      "5": 2023,
+      "25": null,
+      "100": null
+    },
+    "civilian_years": {
+      "1": 2003,
+      "5": null,
+      "25": null,
+      "100": null
+    }
+  },
+  "large language model": {
+    "defence_n": 8,
+    "civilian_n": 4,
+    "defence_years": {
+      "1": 2021,
+      "5": 2023,
+      "25": null,
+      "100": null
+    },
+    "civilian_years": {
+      "1": 2006,
+      "5": null,
+      "25": null,
+      "100": null
+    }
+  },
+  "diffusion model": {
+    "defence_n": 8,
+    "civilian_n": 4,
+    "defence_years": {
+      "1": 1990,
+      "5": 2013,
+      "25": null,
+      "100": null
+    },
+    "civilian_years": {
+      "1": 2003,
+      "5": null,
+      "25": null,
+      "100": null
+    }
+  },
+  "foundation model": {
+    "defence_n": 2,
+    "civilian_n": 0,
+    "defence_years": {
+      "1": 2006,
+      "5": null,
+      "25": null,
+      "100": null
+    },
+    "civilian_years": {
+      "1": null,
+      "5": null,
+      "25": null,
+      "100": null
+    }
+  }
+}
