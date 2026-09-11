@@ -216,3 +216,42 @@ multi-word terms — it tests only the first token, so "large language model" sc
 and are the ones quoted above.
 
 **Spend:** $0.00.
+
+## 2026-09-11 (Fri, evening) — patents joined; hypothesis broke then recovered
+
+**C4 landed.** `src/join_patents.py` scanned all 34,825,379 RoS citation rows:
+**26,085 links, 9,048 distinct patents, 5,008 distinct ACL papers (7.2% of the
+matched corpus).** Comparable in shape to Kalluri's ~23k patents from 19k CV papers.
+
+**reftype is degenerate, and that is fine.** Verified on our own copy across
+25.9M rows: `app` 99.997%, `exm` 0.003%, no `unk`. RoS v65 ships effectively
+applicant-only. So Michael's examiner-inflation objection does not apply to this
+file — but we must SAY the file is pre-filtered, not imply we filtered it.
+`wherefound` on our subset is 91.6% frontonly, so the in-text ablation retains
+only ~8% — weaker than the 42% the full file suggested. Report that honestly.
+
+**H1 broke.** Speaker ID in the ACL corpus: **1 paper, 1 patent.** Speaker
+identification publishes at Interspeech/ICASSP, not ACL. The pre-registered
+directional prediction named a subfield that is essentially absent from the
+corpus we built. My error, caught by testing rather than by assuming.
+What IS in the ACL data: dialogue/QA 1,537 patents, parsing 1,223, MT 1,198.
+
+**H1 recovered on the right corpus.** `src/probe_speaker_id.py` pulled 16,686
+speaker-ID/speech works from OpenAlex irrespective of venue and joined them to
+RoS: **17,565 links, 7,071 distinct patents, 2,284 distinct papers, 13.7% of
+works cited by >=1 patent** vs 7.2% for ACL. Speech is ~2x more patent-proximate
+than text NLP — the predicted direction, on the corpus that actually contains
+the subfield.
+
+**Design change, for the better.** The paper becomes a TWO-ARM comparison, text
+NLP vs speech, measured identically. That is a stronger design than ACL-only and
+it converts today's error into the study's control arm.
+
+**Caveats that must not be lost:**
+- The 6,000-per-query cap makes 16,686 a floor, not a census.
+- Search terms pulled in general speech processing (spectral subtraction, PLP)
+  alongside speaker ID proper. These must be separated before any claim.
+- 13.7% vs 7.2% is NOT yet matched on era or venue type (journals vs
+  conferences). Unmatched, it is not publishable.
+
+**Spend:** $0.00.

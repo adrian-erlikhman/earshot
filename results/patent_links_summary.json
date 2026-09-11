@@ -1,0 +1,17 @@
+{
+  "n_links": 26085,
+  "n_distinct_patents": 9048,
+  "n_distinct_papers": 5008,
+  "reftype_counts": {
+    "app": 26083
+  },
+  "wherefound_counts": {
+    "frontonly": 23891,
+    "both": 1201,
+    "bodyonly": 991
+  },
+  "applicant_distinct_patents": 9048,
+  "examiner_distinct_patents": 0,
+  "conf5_distinct_patents": 9007,
+  "conf5_applicant_distinct_patents": 9007
+}

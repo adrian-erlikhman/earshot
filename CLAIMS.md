@@ -10,7 +10,9 @@ script and a results file here. A claim with no row in this table does not ship.
 | C1 | ACL Anthology papers ingested | **127,851** (1,719 volumes, 1952–2026) | `src/ingest_acl.py` | `data/interim/acl_papers.csv` | ✅ |
 | C2 | Share carrying a DOI | **54.8%** | `src/ingest_acl.py` | `data/interim/acl_papers.csv` | ✅ |
 | C3 | Papers matched to OpenAlex | **69,327** = 98.9% of DOI-bearing, **88.1% of core venues** (Zhang 2025: ~85%) | `src/join_openalex.py` | `data/interim/acl_openalex.csv` | ✅ |
-| C4 | Distinct patents citing NLP papers | — | `src/fetch_ros.py` | `results/patent_links.csv` | ⬜ |
+| C4 | Distinct patents citing ACL papers | **9,048** (26,085 links, 5,008 papers, 100% applicant) | `src/join_patents.py` | `results/patent_links.csv` | 🟡 |
+| C4b | Distinct patents citing speech/speaker-ID papers | **7,071** (17,565 links, 2,284 papers) | `src/probe_speaker_id.py` | `results/speaker_id_probe.json` | 🟡 |
+| C4c | Patent-proximity rate, text NLP vs speech | **7.2% vs 13.7%** — NOT yet matched on era/venue type | `src/join_patents.py`, `src/probe_speaker_id.py` | both | 🟡 |
 | C5 | Share of citing patents classified surveillance | — | `src/classify_patents.py` | `results/patent_labels.csv` | ⬜ |
 | C6 | Surveillance-citation rate, `speaker_id_voice` (H1) | — | `src/analysis.py` | `results/h1_subfield_rates.csv` | ⬜ |
 | C7 | Control: same rate for non-NLP CS papers | — | `src/analysis.py` | `results/h1_control.csv` | ⬜ |
