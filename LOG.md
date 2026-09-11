@@ -133,7 +133,32 @@ Everything else lives on the poster and in the explorer.
   or a polite Google Patents crawl.
 
 **Next**
-- Stage 2: OpenAlex join (DOI first, title+year fallback for the pre-2015 tail).
-  Target ≈85% match rate as a sanity check against Zhang 2025.
+- Stage 2b: title+year fallback for the no-DOI tail (bulk-pull ACL venue sources,
+  match locally). This is now a dependency, not a nicety — see 09-11.
 - Stage 3: download Reliance on Science, join on `oaid`.
 - Write `configs/subfields.yaml` and `configs/patent_rubric.md` before any labeling.
+
+## 2026-09-11 (Fri) — stage 2 complete
+
+**Done**
+- **Stage 2 shipped:** `src/join_openalex.py`. **69,327 of 70,124 DOI-bearing
+  papers matched to OpenAlex = 98.9%; 39,006/44,266 core-venue papers = 88.1%**,
+  above Zhang 2025's ~85% benchmark. CLAIMS C3 ✅.
+- First full run lost 232 consecutive batches (11,600 DOIs) to an OpenAlex
+  rate-limit burst around batches 950–1150, silently — the run still "succeeded"
+  at 82.4%. The per-batch cache made recovery a free re-run. **Lesson: the script
+  reports failed-batch counts for a reason; never read the headline rate without
+  checking that line.**
+- Per-era match rates now track DOI availability almost exactly (19.3% vs 21.3%
+  available in 1979–99; 14.7% vs 14.7% in 2010–14; 74.3% vs 74.6% in 2020–26),
+  which confirms the join is saturated: everything joinable by DOI is joined.
+
+**Open issue — stage 2b is now load-bearing.**
+58,524 papers have no DOI, concentrated pre-2015. Patents granted 2015–2025 cite
+1990s work heavily, and the DARPA-era speech literature is exactly the material
+most likely to appear in voice-biometrics patents. Leaving that tail unmatched
+would bias H1 *against* our own hypothesis, so this is a correctness issue rather
+than a coverage nicety. Plan: bulk-pull the ACL venue sources from OpenAlex by
+source-id + year and match on normalised title, rather than one query per paper.
+
+**Spend:** $0.00.
