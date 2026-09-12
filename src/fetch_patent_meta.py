@@ -52,6 +52,11 @@ def norm_id(pid: str) -> str:
     return p
 
 
+class TransientError(RuntimeError):
+    """Request failed. NOT the same as 'this patent has no record' - caching the
+    two the same way silently poisons the cache with recoverable failures."""
+
+
 def gp_fetch(pid: str) -> dict | None:
     q = urllib.parse.quote(f"q={pid}", safe="")
     url = f"https://patents.google.com/xhr/query?url={q}"
@@ -82,12 +87,12 @@ def gp_fetch(pid: str) -> dict | None:
             return None                    # searched fine, no matching patent
         except urllib.error.HTTPError as e:
             if e.code in (429, 503):
-                time.sleep((8 * (i + 1)) + random.random() * 4)
+                time.sleep((20 * (i + 1)) + random.random() * 10)
                 continue
-            return None
-        except Exception:
-            time.sleep(3 * (i + 1))
-    return None
+            raise TransientError(f"HTTP {e.code}")
+        except Exception as e:
+            time.sleep(5 * (i + 1))
+    raise TransientError("retries exhausted")
 
 
 def one(pid: str, delay: float) -> dict | None:
@@ -99,21 +104,31 @@ def one(pid: str, delay: float) -> dict | None:
             return json.loads(f.read_text(encoding="utf-8"))
         except Exception:
             f.unlink(missing_ok=True)
-    time.sleep(delay * random.random())
-    rec = gp_fetch(pid)
+    time.sleep(delay + delay * random.random())
+    try:
+        rec = gp_fetch(pid)
+    except TransientError:
+        with _lock:
+            _stats["err"] += 1
+        return None                       # NOT cached - retry on the next run
     with _lock:
         if rec:
             _stats["fetched"] += 1
         else:
             _stats["miss"] += 1
     CACHE.mkdir(parents=True, exist_ok=True)
-    f.write_text(json.dumps(rec or {"patent_id": pid, "_miss": True}), encoding="utf-8")
+    f.write_text(json.dumps(rec or {"patent_id": pid, "_absent": True}), encoding="utf-8")
     return rec
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=None)
+    ap.add_argument("--sample", type=int, default=None,
+                    help="random sample of patents instead of all. Rates estimated "
+                         "from a sample with CIs are as valid as a census and cost "
+                         "a quarter of the requests.")
+    ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--workers", type=int, default=4, help="keep low; undocumented endpoint")
     ap.add_argument("--delay", type=float, default=0.5)
     a = ap.parse_args()
@@ -124,6 +139,10 @@ def main() -> None:
 
     links = pd.read_csv(RESULTS / "patent_links.csv", low_memory=False)
     pids = sorted({norm_id(p) for p in links["patent"].dropna().unique()})
+    if a.sample and a.sample < len(pids):
+        random.Random(a.seed).shuffle(pids)
+        pids = sorted(pids[: a.sample])
+        print(f"[samp ] random sample of {len(pids):,} (seed {a.seed})")
     if a.limit:
         pids = pids[: a.limit]
     print(f"[pat ] {len(pids):,} distinct citing patents to resolve")
@@ -153,7 +172,8 @@ def main() -> None:
     df.to_csv(out, index=False)
 
     print(f"\n[done] {len(df):,}/{len(pids):,} resolved ({100*len(df)/max(len(pids),1):.1f}%) -> {out}")
-    print(f"       cache_hits={_stats['cache']:,} fetched={_stats['fetched']:,} miss={_stats['miss']:,}")
+    print(f"       cache_hits={_stats['cache']:,} fetched={_stats['fetched']:,} "
+          f"absent={_stats['miss']:,} transient_errors={_stats['err']:,} (will retry next run)")
     if len(df):
         for col in ("title", "abstract", "assignee"):
             if col in df:
