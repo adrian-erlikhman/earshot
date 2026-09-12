@@ -40,6 +40,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "data" / "interim" / "patent_meta"
+RAWDIR = ROOT / "data" / "interim" / "patent_html"
 RESULTS = ROOT / "results"
 UA = {"User-Agent": "Mozilla/5.0 (compatible; academic research; contact via github.com/adrian-erlikhman/earshot)"}
 
@@ -137,6 +138,10 @@ def fpo_fetch(pid: str) -> dict | None:
         m = re.search(rf"{name}:?\s*</div>\s*<div[^>]*>(.*?)</div>", t, re.S | re.I)
         return _clean(m.group(1)) if m else None
 
+    # Cache raw HTML so any field we want later costs no extra request.
+    RAWDIR.mkdir(parents=True, exist_ok=True)
+    (RAWDIR / f"{pid}.html").write_text(t, encoding="utf-8")
+
     m = re.search(r"<title>(.*?)</title>", t, re.S)
     title = _clean(m.group(1)) if m else None
     if title and " - " in title:
@@ -144,9 +149,15 @@ def fpo_fetch(pid: str) -> dict | None:
     abstract = field("Abstract")
     if not (title or abstract):
         return None
+    # Classification codes: examiner-assigned, complete, and free here.
+    # Used as convergent validity against the LLM label (G10L17 speaker id,
+    # G06V40 biometrics, G08B13 alarm/surveillance).
+    ipc = field("International Classes") or field("Classes")
+    cpc = field("Current CPC Class") or field("CPC Class")
     return {"patent_id": pid, "title": title, "abstract": abstract,
             "assignee": field("Assignee"), "inventor": field("Inventors"),
             "grant_date": field("Publication Date"),
+            "ipc": ipc, "cpc": cpc, "us_class": field("Current U.S. Class"),
             "filing_date": None, "priority_date": None, "source": "fpo"}
 
 

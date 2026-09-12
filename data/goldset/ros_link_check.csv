@@ -1,0 +1,13 @@
+item,oaid,paper_title,patent,patent_title,patent_assignee,confscore,wherefound,plausible,note
+1,2120084270,Measures of Distributional Similarity,us-10146767-b2, Automatic text skimming using lexical chains,"Skimcast Holdings, Llc",10,bodyonly,,
+2,2096605810,Interleaving Syntax and Semantics in an Efficient Bottom-Up Parser,us-10127911-b2, Speaker identification and unsupervised speaker adaptation techniques,Apple Inc.,10,frontonly,,
+3,2096765155,Incorporating Non-local Information into Information Extraction Systems by Gibbs Sampling,us-10204099-b2,Systems and methods for multi-user multi-lingual communications,"MZ IP Holdings, LLC",10,frontonly,,
+4,2121974041,Transportable Natural-Language Interfaces to Databases,us-10185542-b2," Device, method, and graphical user interface for enabling conversation &hellip;",Apple Inc.,10,frontonly,,
+5,1938708284,Image Representations and New Domains in Neural Image Captioning,us-10102454-b2, Image classification utilizing semantic relationships in a classification &hellip;,International Business Machines Corporation,10,frontonly,,
+6,2158847908,The Proposition Bank: An Annotated Corpus of Semantic Roles,us-10055402-b2, Generating a semantic network based on semantic connections between subject- &hellip;,Accenture Global Services Limited,9,frontonly,,
+7,2251058040,The Second Dialog State Tracking Challenge,us-10055403-b2, Rule-based dialog state tracking,Adobe Systems Incorporated,8,frontonly,,
+8,2160212714,The CommandTalk Spoken Dialogue System,us-10199051-b2,Voice trigger for a digital assistant,Apple Inc.,10,frontonly,,
+9,2010153677,Deriving Database Queries from Logical Forms by Abductive Definition Expansion,us-10199051-b2,Voice trigger for a digital assistant,Apple Inc.,10,frontonly,,
+10,2163514362,Part-of-Speech Induction From Scratch,us-10223066-b2,Proactive assistance based on dialog communication between devices,Apple Inc.,9,frontonly,,
+11,2156985047,A Systematic Comparison of Various Statistical Alignment Models,us-10049667-b2, Location-based conversational understanding,"Microsoft Technology Licensing, Llc",10,frontonly,,
+12,2128870637,Distributional Memory: A General Framework for Corpus-Based Semantics,us-10134297-b2, Systems and methods for determining text complexity,Educational Testing Service,10,frontonly,,
