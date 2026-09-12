@@ -1,0 +1,8 @@
+# Binary files must never go through line-ending conversion. On Windows with
+# core.autocrlf, a PDF treated as text can be corrupted on commit or checkout.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.zip binary
+*.gz binary
