@@ -195,6 +195,11 @@ def main() -> None:
                          "from a sample with CIs are as valid as a census and cost "
                          "a quarter of the requests.")
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--cache-dir", default=None,
+                    help="separate cache for the control arm so the two arms never mix")
+    ap.add_argument("--ids", default=None,
+                    help="CSV with a 'patent' column — used for the control arm so it "
+                         "goes through exactly the same fetch path as the treatment arm")
     ap.add_argument("--source", default="fpo", choices=["fpo", "google"],
                     help="google is 503 across all surfaces as of 2026-09-11")
     ap.add_argument("--workers", type=int, default=3, help="keep low; be a polite guest")
@@ -205,8 +210,16 @@ def main() -> None:
         print("[note] USPTO_API_KEY is set — the official ODP route is preferred;")
         print("       wire it in before a full run. Using Google for now.")
 
-    links = pd.read_csv(RESULTS / "patent_links.csv", low_memory=False)
+    global CACHE, RAWDIR
+    if a.cache_dir:
+        CACHE = ROOT / "data" / "interim" / a.cache_dir
+        RAWDIR = ROOT / "data" / "interim" / f"{a.cache_dir}_html"
+        print(f"[cache] {CACHE.name}")
+    src_csv = Path(a.ids) if a.ids else (RESULTS / "patent_links.csv")
+    links = pd.read_csv(src_csv, low_memory=False)
     pids = sorted({norm_id(p) for p in links["patent"].dropna().unique()})
+    if a.ids:
+        print(f"[ids  ] {len(pids):,} ids from {src_csv.name}")
     if a.sample and a.sample < len(pids):
         random.Random(a.seed).shuffle(pids)
         pids = sorted(pids[: a.sample])

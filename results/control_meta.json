@@ -1,0 +1,10 @@
+{
+  "n_sampled": 2500,
+  "pool_size": 2739122,
+  "distinct_patents_in_file": 2748170,
+  "rows_scanned": 34825379,
+  "treated_excluded": 9048,
+  "seed": 20260912,
+  "definition": "uniform over distinct patents citing >=1 paper but no ACL paper",
+  "not_a_field_matched_control": true
+}

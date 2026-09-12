@@ -114,6 +114,38 @@ def main() -> None:
         print(f"\n   ABLATION, in-text citations only (n={len(sub):,}):")
         print(f"   surveillance        {f.sum():>7,.0f}  {100*f.mean():>6.2f}%  [{100*lo:>5.2f}, {100*hi:>5.2f}]")
 
+    # ------------------------------------------------- A2. CONTROL COMPARISON
+    print("\n[A2] CONTROL — is the NLP rate different from science-citing patents generally?")
+    ctl_path = RESULTS / "control_labels.csv"
+    if ctl_path.exists():
+        ctl = pd.read_csv(ctl_path).dropna(subset=["label"]).drop_duplicates("patent_id")
+        t = (lab["label"] == "surveillance").to_numpy(dtype=float)
+        c = (ctl["label"] == "surveillance").to_numpy(dtype=float)
+        tlo, thi = boot_ci(t); clo, chi = boot_ci(c)
+        print(f"   treatment (cites ACL) {t.sum():>5,.0f}/{len(t):<6,} = {100*t.mean():>5.2f}%  [{100*tlo:.2f}, {100*thi:.2f}]")
+        print(f"   control   (no ACL)    {c.sum():>5,.0f}/{len(c):<6,} = {100*c.mean():>5.2f}%  [{100*clo:.2f}, {100*chi:.2f}]")
+        # risk ratio with a bootstrap CI
+        rng = np.random.default_rng(0)
+        rr = []
+        for _ in range(10000):
+            a1 = t[rng.integers(0, len(t), len(t))].mean()
+            a2 = c[rng.integers(0, len(c), len(c))].mean()
+            if a2 > 0:
+                rr.append(a1 / a2)
+        if rr:
+            print(f"   risk ratio {np.mean(rr):.2f}x  [{np.percentile(rr,2.5):.2f}, {np.percentile(rr,97.5):.2f}]")
+        try:
+            from scipy import stats as _st
+            tab = [[int(t.sum()), int(len(t)-t.sum())], [int(c.sum()), int(len(c)-c.sum())]]
+            _, pv = _st.fisher_exact(tab)
+            print(f"   Fisher exact p = {pv:.4g}   {'SIGNIFICANT' if pv<0.05 else 'not significant'}")
+        except Exception:
+            pass
+        print("   NOTE: control is 'the average science-citing USPTO patent', NOT field-matched.")
+    else:
+        print("   *** control_labels.csv missing — THE PRE-REGISTERED CONTROL HAS NOT RUN. ***")
+        print("   Without it the headline rate is uninterpretable. Do not draft around it.")
+
     # ---------------------------------------------------------------- B. H1
     print(f"\n[B] H1 — surveillance-citation rate BY SUBFIELD (papers <= {a.max_year})")
     pw = papers[papers["year"] <= a.max_year].copy()
