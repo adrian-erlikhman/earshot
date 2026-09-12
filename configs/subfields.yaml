@@ -1,0 +1,79 @@
+# Subfield taxonomy — transparent keyword rules, deliberately NOT a topic model.
+#
+# A reviewer must be able to check any single assignment by eye. Every rule is a
+# case-insensitive regex over `title + " " + abstract`. Papers may match several
+# subfields; rates are reported per-label with the multi-label caveat stated.
+#
+# Written before any rate was computed. Changes after results exist get logged in
+# LOG.md with a reason.
+
+speaker_id_voice:
+  - 'speaker (identif|recogni|verif|diariz)'
+  - 'voice (biometric|print)'
+  - '\bvoiceprint'
+  - 'speaker embedding'
+  - '\bx-vector|\bi-vector'
+
+speech_asr:
+  - 'speech recogni'
+  - '\basr\b'
+  - 'acoustic model'
+  - 'spoken language (understanding|process)'
+  - 'speech[- ]to[- ]text'
+  - 'text[- ]to[- ]speech|\btts\b|speech synthes'
+  - 'phonem|phonetic|prosod'
+
+authorship_stylometry:
+  - 'author(ship)? (attribut|identif|profil|verif)'
+  - 'stylometr'
+  - 'native language identif'
+  - 'plagiar'
+  - 'writing style'
+
+machine_translation:
+  - 'machine translation'
+  - '\bnmt\b|\bsmt\b'
+  - 'word alignment'
+  - 'bilingual lexicon'
+  - 'translation model'
+
+information_extraction:
+  - 'named entity'
+  - 'relation extraction'
+  - 'information extraction'
+  - 'coreference'
+  - 'event extraction'
+  - 'slot filling'
+  - 'entity linking'
+
+sentiment_emotion:
+  - 'sentiment'
+  - 'opinion mining'
+  - 'emotion (recogni|detect|classif)'
+  - 'stance detect'
+  - 'subjectivity'
+
+dialogue_qa:
+  - 'dialogue|dialog system|dialog state'
+  - 'question answering'
+  - 'conversational (agent|system|ai)'
+  - 'chatbot'
+  - 'intent (detect|classif)'
+
+parsing_syntax:
+  - 'parsing|parser\b'
+  - 'treebank'
+  - 'dependency (pars|tree)'
+  - 'part[- ]of[- ]speech|\bpos tagg'
+  - 'constituen'
+  - 'morpholog'
+
+summarization:
+  - 'summari(z|s)ation'
+  - 'abstractive|extractive summar'
+
+retrieval_search:
+  - 'information retrieval'
+  - 'document ranking|passage retrieval'
+  - 'query (expansion|understanding)'
+  - 'search engine'

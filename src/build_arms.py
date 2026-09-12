@@ -14,7 +14,7 @@ comparison is not driven by age, with bootstrap CIs.
     python -m src.build_arms
 """
 from __future__ import annotations
-import csv, hashlib, json, sys, time, urllib.parse, urllib.request
+import csv, hashlib, json, sys, time, urllib.error, urllib.parse, urllib.request
 from collections import defaultdict
 from pathlib import Path
 import numpy as np
@@ -23,7 +23,9 @@ csv.field_size_limit(min(sys.maxsize, 2**31-1))
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT/"data"/"interim"/"arms_cache"
 M = "babafiraislife@gmail.com"
-CAP = 12000          # per query; recorded in output so the cap is never hidden
+CAP = 12000
+RATE = 0.6           # seconds between OpenAlex calls; 429s are what produced fake zeros
+FAILURES: list = []          # per query; recorded in output so the cap is never hidden
 
 SUBFIELDS = {
  "speaker_id": ["speaker recognition","speaker verification","speaker identification","voice biometrics"],
@@ -36,51 +38,81 @@ SUBFIELDS = {
  "summarization": ["text summarization","automatic summarization"],
 }
 
+class OAError(RuntimeError):
+    pass
+
+
 def oa(**p):
-    p["mailto"]=M
-    u="https://api.openalex.org/works?"+urllib.parse.urlencode(p)
-    key=CACHE/f"{hashlib.md5(u.encode()).hexdigest()}.json"   # md5: hash() is per-process randomised
+    """Fetch one OpenAlex page. Raises on persistent failure - never returns a
+    silent empty result, because an empty arm is indistinguishable from a real
+    zero and that is exactly how a rate-limit turns into a fake finding."""
+    p["mailto"] = M
+    u = "https://api.openalex.org/works?" + urllib.parse.urlencode(p)
+    key = CACHE / f"{hashlib.md5(u.encode()).hexdigest()}.json"
     if key.exists():
-        try: return json.loads(key.read_text(encoding="utf-8"))
-        except Exception: key.unlink(missing_ok=True)
-    r=urllib.request.Request(u,headers={"User-Agent":f"ai4peace (mailto:{M})"})
-    for i in range(5):
         try:
-            with urllib.request.urlopen(r,timeout=90) as x: d=json.load(x)
-            CACHE.mkdir(parents=True,exist_ok=True)
-            key.write_text(json.dumps(d),encoding="utf-8"); return d
+            return json.loads(key.read_text(encoding="utf-8"))
         except Exception:
-            if i==4: return None
-            time.sleep(4*(i+1))
+            key.unlink(missing_ok=True)
+    r = urllib.request.Request(u, headers={"User-Agent": f"ai4peace (mailto:{M})"})
+    last = None
+    for i in range(7):
+        try:
+            with urllib.request.urlopen(r, timeout=120) as x:
+                d = json.load(x)
+            CACHE.mkdir(parents=True, exist_ok=True)
+            key.write_text(json.dumps(d), encoding="utf-8")
+            time.sleep(RATE)                      # be a good citizen, always
+            return d
+        except urllib.error.HTTPError as e:
+            last = f"HTTP {e.code}"
+            time.sleep((15 if e.code == 429 else 5) * (i + 1))
+        except Exception as e:
+            last = f"{type(e).__name__}"
+            time.sleep(5 * (i + 1))
+    raise OAError(f"giving up after 7 tries ({last}): {u[:110]}")
+
 
 def pull(queries):
-    works={}; capped=False; totals={}
+    works, capped, totals, failed = {}, False, {}, []
     for q in queries:
-        cur="*"; got=0
-        d0=oa(filter=f"title_and_abstract.search:{q}",per_page=1)
-        totals[q]=(d0 or {}).get("meta",{}).get("count")
-        while cur and got<CAP:
-            d=oa(filter=f"title_and_abstract.search:{q}",per_page=200,cursor=cur,
-                 select="id,publication_year,type,primary_location")
-            if not d: break
-            res=d.get("results",[])
-            if not res: break
+        try:
+            d0 = oa(filter=f"title_and_abstract.search:{q}", per_page=1)
+            totals[q] = (d0 or {}).get("meta", {}).get("count")
+        except OAError as e:
+            print(f"    '{q}': COUNT FAILED - {e}")
+            failed.append(q); totals[q] = None; continue
+        cur, got = "*", 0
+        while cur and got < CAP:
+            try:
+                d = oa(filter=f"title_and_abstract.search:{q}", per_page=200, cursor=cur,
+                       select="id,publication_year,type,primary_location")
+            except OAError as e:
+                print(f"    '{q}': PAGE FAILED at {got:,} - {e}")
+                failed.append(q); break
+            res = d.get("results", [])
+            if not res:
+                break
             for w in res:
-                oid=(w.get("id") or "").rsplit("/",1)[-1].lstrip("Ww")
-                loc=(w.get("primary_location") or {}).get("source") or {}
-                works[oid]={"year":w.get("publication_year"),
-                            "type":loc.get("type"),"venue":loc.get("display_name")}
-            got+=len(res); cur=(d.get("meta") or {}).get("next_cursor")
-        if totals[q] and got<totals[q]: capped=True
-        print(f"    '{q}': pulled {got:,} of {totals[q]:,}" if totals[q] else f"    '{q}': {got:,}")
-    return works,capped,totals
+                oid = (w.get("id") or "").rsplit("/", 1)[-1].lstrip("Ww")
+                loc = (w.get("primary_location") or {}).get("source") or {}
+                works[oid] = {"year": w.get("publication_year"),
+                              "type": loc.get("type"), "venue": loc.get("display_name")}
+            got += len(res)
+            cur = (d.get("meta") or {}).get("next_cursor")
+        if totals.get(q) and got < totals[q]:
+            capped = True
+        print(f"    '{q}': pulled {got:,} of {totals[q]:,}" if totals.get(q) else f"    '{q}': pulled {got:,} (total unknown)")
+    return works, capped, totals, failed
+
 
 print("[1] pulling arms from OpenAlex")
 arms={}; meta={}
 for name,qs in SUBFIELDS.items():
     print(f"  {name}:")
-    w,capped,tot=pull(qs)
-    arms[name]=w; meta[name]={"n_works":len(w),"capped":capped,"query_totals":tot}
+    w,capped,tot,failed=pull(qs)
+    arms[name]=w; meta[name]={"n_works":len(w),"capped":capped,"query_totals":tot,"failed_queries":failed}
+    if failed: FAILURES.extend([(name,q) for q in failed])
     print(f"    -> {len(w):,} distinct works (capped={capped})")
 
 all_ids={}
@@ -132,5 +164,10 @@ for name in arms:
         cells.append(f"{(100*e['rate']):>6.1f}% (n={e['n']:,})" if e["rate"] is not None else f"{'--':>18}")
     print(f"{name:<24}"+"".join(f"{c:>18}" for c in cells))
 
+if FAILURES:
+    print("\n!! INCOMPLETE - these queries failed, rates above are NOT valid:")
+    for a,q in FAILURES: print(f"     {a}: {q}")
+    print("   re-run to resume from cache; results/arms.json NOT written")
+    sys.exit(1)
 (ROOT/"results"/"arms.json").write_text(json.dumps(out,indent=2),encoding="utf-8")
 print("\n[done] -> results/arms.json")

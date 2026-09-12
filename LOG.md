@@ -255,3 +255,49 @@ it converts today's error into the study's control arm.
   conferences). Unmatched, it is not publishable.
 
 **Spend:** $0.00.
+
+## 2026-09-11 (Fri, night) — H1 FAILS as pre-registered
+
+`src/subfields_acl.py`, fully offline (no network, so no rate limit can corrupt
+it). Keyword rules in `configs/subfields.yaml`, written before any rate existed.
+
+Corpus-wide patent-proximity: **7.23% [7.03, 7.41]**, n=69,327.
+
+| subfield | papers | rate | 95% CI | vs base |
+|---|---|---|---|---|
+| summarization | 2,536 | 10.84% | [9.66, 12.07] | above |
+| machine_translation | 4,794 | 10.01% | [9.16, 10.85] | above |
+| information_extraction | 3,886 | 9.78% | [8.85, 10.71] | above |
+| parsing_syntax | 4,895 | 9.58% | [8.76, 10.42] | above |
+| dialogue_qa | 7,502 | 9.34% | [8.70, 10.00] | above |
+| retrieval_search | 1,050 | 8.67% | [7.05, 10.38] | ns |
+| sentiment_emotion | 3,302 | 6.87% | [6.03, 7.75] | ns |
+| **speech_asr** | 1,966 | **5.29%** | [4.32, 6.31] | **below** |
+| **authorship_stylometry** | 402 | **3.98%** | [2.24, 5.97] | **below** |
+| **speaker_id_voice** | 79 | **3.80%** | [0.00, 8.86] | ns (n too small) |
+
+**H1 predicted speaker_id_voice and authorship in the top tercile. They are last
+and second-to-last.** Speech and authorship sit significantly BELOW the corpus
+rate. Within ACL, the surveillance-adjacent subfields are the least
+patent-proximate. This is the pre-registered falsification condition and it is
+reported as such.
+
+**Do not report the ranking yet — it is confounded by publication year.**
+Rates collapse to 2-6% in 2020-2026 across every subfield, which is truncation:
+patents take years to issue and cite, and RoS v65 covers grants through 2025
+only. A subfield's overall rate is therefore largely a function of its age mix.
+Restricted to 2015-2019, `speech_asr` is 21.5% — mid-pack, not bottom.
+
+**Next: age-adjust.** Restrict the primary comparison to papers old enough to be
+citable (<=2019), re-test, and report the era-stratified table as primary rather
+than the pooled rate. Only then does either direction of H1 mean anything.
+
+`speaker_id_voice` n=79 with CI [0, 8.86] supports no claim in either direction.
+That is the venue problem again and is why the off-corpus speech arm matters.
+
+**Process note:** I exhausted the OpenAlex rate limit paginating ~40k works per
+subfield, which is what stalled `build_arms.py`. The offline within-corpus
+analysis should have come first — it needs no network and answers the
+comparison more cleanly, since every arm is drawn from one corpus indexed one way.
+
+**Spend:** $0.00.
