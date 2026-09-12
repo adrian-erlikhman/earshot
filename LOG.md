@@ -163,27 +163,31 @@ source-id + year and match on normalised title, rather than one query per paper.
 
 **Spend:** $0.00.
 
-## 2026-09-11 (Fri, later) — Michael's counter-proposal, tested
+## 2026-09-11 (Fri, later) — SBIR/STTR alternative design, tested and rejected
 
-Michael proposed swapping the whole project for an SBIR/STTR adoption-lag study
-(defence vs civilian time-to-adoption of AI methods, plus a Llama-licence case
-study). He named the test that would decide it. I ran it.
+An alternative design was put forward: swap the project for an SBIR/STTR
+adoption-lag study (defence vs civilian time-to-adoption of AI methods, plus a
+Llama-licence case study). A decisive test was specified in advance. It was run.
 
 **Test 1 — does the Llama second result exist? No. Zero.**
-Downloaded the full award CSV (`src/fetch_sbir.py`): **367.6 MB** (he estimated
-290 MB), **207,731 rows** (he said 219,651), award years **1983–2024 but 2024 has
-only 23 rows in the entire file** (he said 1983–2026). Defence 99,253 / four
-civilian agencies 96,724, close to his split.
+Downloaded the full award CSV (`src/fetch_sbir.py`): **367.6 MB**, **207,731
+rows**, award years **1983–2024 but 2024 has only 23 rows in the entire file**.
+Defence 99,253 / four civilian agencies 96,724.
+
+Note the file and the live site disagree, and both are "true": sbir.gov advertises
+219,651 awards through 2026 and labels the download 290 MB, but `award_data.csv`
+carries `Last-Modified: 2026-01-01` and is a stale export. Anyone reasoning from
+the site's own figures gets the larger numbers.
 
 Word-boundary grep over all 99,253 defence abstracts (`src/probe_sbir.py`):
 **llama 0, mistral 0**, gpt 6, bert 4, large language model 7, foundation model 2.
-His own decision rule was "thousands = two findings, thirty = case study." It is
-zero. And independently, the corpus effectively ends in 2023, while Meta's
+The decision rule fixed in advance was "thousands = two findings, thirty = case
+study." It is zero. And independently, the corpus effectively ends in 2023, while Meta's
 national-security exception was November 2024 — so there is no post-announcement
 data even in principle.
 
-**Test 2 — abstract coverage.** He was right to demand this first, and it is worse
-than he feared. Defence abstracts missing: **2000: 96.2%, 1999: 78.8%**, and
+**Test 2 — abstract coverage.** Rightly demanded before anything else, and worse
+than anyone expected. Defence abstracts missing: **2000: 96.2%, 1999: 78.8%**, and
 24–40% missing across 1983–1996. 2001–2020 is clean (<1%).
 
 **Test 3 — does the lag design have data at all?** (`src/probe_sbir2.py`)
@@ -192,7 +196,7 @@ right way (defence 5th mention 2013 vs civilian 2015; 100th 2019 vs 2020).
 Everything post-2018 is single digits.
 
 **But naive keyword dating is badly contaminated, worse than the order-statistic
-problem Michael flagged.** My probe dates `generative adversarial` to 1990 and
+problem already identified.** My probe dates `generative adversarial` to 1990 and
 `bert` to 1994 (actual: 2014 and 2018); `GloVe` matches *gloves*; `transformer`
 matches electrical transformers to 1984; `CNN` matches the news network. False
 positives dominate exactly at small k, which is precisely the quantity the
@@ -201,11 +205,11 @@ time-to-k-th-mention estimator headlines.
 **Verdict: do not swap.** His critique of the current project is largely right,
 but the replacement is in worse shape and we would have found that out on day 3.
 
-**Adopted from his email regardless:**
+**Adopted from that proposal regardless:**
 1. **Applicant-only citations become the headline number.** Examiner citations
    only mean a patent office employee judged our paper relevant prior art. RoS
    ships `reftype` (observed value `app`), so this is a filter, not a rebuild.
-   Pulling the count now rather than on day 8. This is the best point in his email.
+   Pulling the count now rather than on day 8. This was the strongest point raised.
 2. **Cut to speech / speaker ID.** We cannot match a six-person hand-coding effort.
 3. **Upstream half demotes to a framing paragraph**, positioned against Wu 2022
    explicitly, not co-headlined.
@@ -225,7 +229,7 @@ matched corpus).** Comparable in shape to Kalluri's ~23k patents from 19k CV pap
 
 **reftype is degenerate, and that is fine.** Verified on our own copy across
 25.9M rows: `app` 99.997%, `exm` 0.003%, no `unk`. RoS v65 ships effectively
-applicant-only. So Michael's examiner-inflation objection does not apply to this
+applicant-only. So the examiner-inflation objection does not apply to this
 file — but we must SAY the file is pre-filtered, not imply we filtered it.
 `wherefound` on our subset is 91.6% frontonly, so the in-text ablation retains
 only ~8% — weaker than the 42% the full file suggested. Report that honestly.
@@ -383,3 +387,65 @@ positives in the Reliance on Science linkage. Check a handful by hand before
 trusting the denominator.
 
 **Spend to date: $0.0125.**
+
+## 2026-09-11 (Fri, night) — review pass: one bug, one rule change, several checks
+
+The design went through a hard review pass. Outcomes, all verified here rather
+than taken on trust.
+
+**Base rate checked and confirmed.** A review query read the <=2019 denominator
+as 48,450; it is **18,450**. Numerator **3,795**, denominator **18,450**, rate **20.57%**, and
+3,795 <= 5,009 cited papers corpus-wide. Consistent. Likewise `both` is
+**4.60%** of our subset, not 0.4%.
+
+**Full-file field distributions** (all 34,825,379 rows, not our subset):
+- `reftype`: app **99.998%**, exm **0.002%**, **no `unk` at all** — despite the
+  documentation stating most pre-2006 references should be Unk. v65 ships
+  effectively applicant-only. Our reading of the field was correct; the field is
+  genuinely degenerate.
+- `wherefound`: frontonly **62.3%**, bodyonly **26.4%**, both **11.2%** — which
+  matches Marx & Fuegi's published ~10.5% for "both". **But our subset is 91.6%
+  frontonly against 62.3% file-wide.** That gap is a real property of NLP-citing
+  patents, not a parsing bug, and it weakens our evidence: these are
+  disclosure-style citations. Report it prominently.
+
+**BUG FOUND — venue_key was wrong for the old Anthology ID scheme.** `P19.xml`
+is ACL 2019, `D19` EMNLP, `N18` NAACL, but `volume_id()` took the filename stem,
+so every pre-2020 ACL/EMNLP/NAACL paper was excluded from "core venues". ACL
+9,335 -> **15,988**, EMNLP 7,338 -> **11,226**, NAACL 2,663 -> **5,220**. The
+earlier "88.1% of core venues" figure was measured on the wrong set. Fixed and
+written back.
+
+**Zhang replication now lands.** Restricted to ACL/EMNLP/NAACL 1979-2024:
+**24,829 papers (Zhang 24,821 — eight apart)**, 20,334 mapped (Zhang 21,104),
+**18,112 links (Zhang 20,218)**, 0.891 links/paper (Zhang 0.958). The residual
+~10% is RoS v65 being USPTO-only and grant-year-limited. The pipeline reproduces
+published work.
+
+**Positive control was circular.** The seven cases were drawn from
+the rubric the model was handed, so it scored on paraphrases of its own prompt.
+It shows the labels are *reachable*, nothing more. Replaced by two real tests:
+- **Input sanity:** all 60 pilot patents had genuine abstracts (201-312 chars,
+  median 306), zero error pages.
+- **Assignee redaction:** re-ran all 60 with the assignee replaced by
+  "(redacted)". **Zero labels moved.** The classifier reads the claim, not the
+  applicant.
+
+**AGREEMENT RULE AMENDED — see `configs/patent_rubric.md` v1.1, dated today,
+before any gold-set labelling.** Verified by independent simulation: at 95%
+`neither` prevalence, two 95%-accurate coders get E[κ]=0.54 with **P(κ>=0.6) =
+29%**; at 98%, κ=0.32 and P=1.9%. Raw agreement (0.93) and AC1 (0.92) are flat
+across every prevalence. The v1 gate would have killed the headline for the
+shape of the label distribution rather than for disagreement. Replaced by a
+per-class F1 gate on the surveillance class, with AC1 and κ both reported, and
+the 200 stratified on model label and reweighted to population.
+
+**Coder identity now disclosed in the paper:** both coders are the authors, so
+human-human agreement is internal consistency, not independent validation.
+
+**Still open:** re-pull the speech corpus with proper cursor paging (my 6,000/query
+cap was mine, not OpenAlex's, and truncation is relevance-ordered so it enriches
+for highly-cited papers — precisely the direction that inflated the 13.7%);
+CPC codes as convergent validity; classifier over all 9,048 once metadata lands.
+
+**Spend: $0.0125.**

@@ -32,6 +32,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import html as _html
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -95,7 +96,61 @@ def gp_fetch(pid: str) -> dict | None:
     raise TransientError("retries exhausted")
 
 
-def one(pid: str, delay: float) -> dict | None:
+FPO_UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                        "(KHTML, like Gecko) Chrome/120.0 Safari/537.36"}
+
+
+def _clean(s: str | None) -> str | None:
+    if not s:
+        return None
+    s = re.sub(r"<[^>]+>", " ", s)
+    s = _html.unescape(s)
+    s = re.sub(r"\s+", " ", s).strip()
+    return s or None
+
+
+def fpo_fetch(pid: str) -> dict | None:
+    """FreePatentsOnline. Google began returning 503 across every surface; FPO
+    serves the FULL abstract rather than Google's truncated snippet, so this is
+    an upgrade on content as well as availability."""
+    num = re.sub(r"^US|[A-Z]\d?$", "", pid)
+    num = re.sub(r"[^0-9A-Z]", "", num)
+    url = f"https://www.freepatentsonline.com/{num}.html"
+    req = urllib.request.Request(url, headers=FPO_UA)
+    for i in range(4):
+        try:
+            with urllib.request.urlopen(req, timeout=45) as r:
+                t = r.read().decode("utf-8", errors="replace")
+            break
+        except urllib.error.HTTPError as e:
+            if e.code in (429, 503):
+                time.sleep((15 * (i + 1)) + random.random() * 8); continue
+            if e.code == 404:
+                return None                    # genuinely absent
+            raise TransientError(f"HTTP {e.code}")
+        except Exception:
+            time.sleep(4 * (i + 1))
+    else:
+        raise TransientError("retries exhausted")
+
+    def field(name):
+        m = re.search(rf"{name}:?\s*</div>\s*<div[^>]*>(.*?)</div>", t, re.S | re.I)
+        return _clean(m.group(1)) if m else None
+
+    m = re.search(r"<title>(.*?)</title>", t, re.S)
+    title = _clean(m.group(1)) if m else None
+    if title and " - " in title:
+        title = title.rsplit(" - ", 1)[0].strip()   # FPO appends " - Assignee"
+    abstract = field("Abstract")
+    if not (title or abstract):
+        return None
+    return {"patent_id": pid, "title": title, "abstract": abstract,
+            "assignee": field("Assignee"), "inventor": field("Inventors"),
+            "grant_date": field("Publication Date"),
+            "filing_date": None, "priority_date": None, "source": "fpo"}
+
+
+def one(pid: str, delay: float, source: str = "fpo") -> dict | None:
     f = CACHE / f"{pid}.json"
     if f.exists():
         with _lock:
@@ -106,7 +161,7 @@ def one(pid: str, delay: float) -> dict | None:
             f.unlink(missing_ok=True)
     time.sleep(delay + delay * random.random())
     try:
-        rec = gp_fetch(pid)
+        rec = fpo_fetch(pid) if source == "fpo" else gp_fetch(pid)
     except TransientError:
         with _lock:
             _stats["err"] += 1
@@ -129,7 +184,9 @@ def main() -> None:
                          "from a sample with CIs are as valid as a census and cost "
                          "a quarter of the requests.")
     ap.add_argument("--seed", type=int, default=42)
-    ap.add_argument("--workers", type=int, default=4, help="keep low; undocumented endpoint")
+    ap.add_argument("--source", default="fpo", choices=["fpo", "google"],
+                    help="google is 503 across all surfaces as of 2026-09-11")
+    ap.add_argument("--workers", type=int, default=3, help="keep low; be a polite guest")
     ap.add_argument("--delay", type=float, default=0.5)
     a = ap.parse_args()
 
@@ -145,7 +202,7 @@ def main() -> None:
         print(f"[samp ] random sample of {len(pids):,} (seed {a.seed})")
     if a.limit:
         pids = pids[: a.limit]
-    print(f"[pat ] {len(pids):,} distinct citing patents to resolve")
+    print(f"[pat ] {len(pids):,} distinct citing patents to resolve via {a.source}")
 
     CACHE.mkdir(parents=True, exist_ok=True)
     todo = [p for p in pids if not (CACHE / f"{p}.json").exists()]
@@ -154,7 +211,7 @@ def main() -> None:
     recs: list[dict] = []
     t0 = time.time()
     with ThreadPoolExecutor(max_workers=a.workers) as ex:
-        futs = {ex.submit(one, p, a.delay): p for p in pids}
+        futs = {ex.submit(one, p, a.delay, a.source): p for p in pids}
         for n, fu in enumerate(as_completed(futs), 1):
             r = fu.result()
             if r and not r.get("_miss"):

@@ -147,3 +147,54 @@ we report the hand-labelled sample with its own confidence intervals and say so
 plainly in the abstract. Human–human κ bounds what is achievable: if the two of
 you cannot agree, the construct is underspecified and the rubric is what needs
 fixing, not the model.
+
+---
+
+# AMENDMENT v1.1 — 2026-09-11, before any gold-set labelling
+
+The v1 rule ("if human–model κ < 0.6 the model's labels carry no headline
+number") is **withdrawn**. It would misfire.
+
+**Why.** Cohen's κ is a chance-corrected statistic and chance agreement is
+enormous when one class dominates. Simulated, two coders each 95% accurate,
+n=200, four labels:
+
+| P(neither) | E[κ] | P(κ ≥ 0.6) | E[AC1] | raw agreement |
+|---|---|---|---|---|
+| 25% | 0.90 | 100% | 0.90 | 0.93 |
+| 70% | 0.86 | 100% | 0.91 | 0.93 |
+| 85% | 0.77 | 99.7% | 0.92 | 0.93 |
+| **95%** | **0.54** | **29%** | 0.92 | 0.93 |
+| 98% | 0.32 | 1.9% | 0.92 | 0.93 |
+
+Raw agreement and AC1 are flat at 0.93/0.92 throughout. Only κ moves. The pilot
+suggests `neither` prevalence near 95%, so the v1 gate had roughly a 1-in-4
+chance of passing **even with near-perfect coders**. It would have failed the
+paper for the shape of the label distribution, not for disagreement.
+
+**The rule that replaces it, fixed now:**
+
+1. **Primary gate — per-class F1 on the `surveillance` class**, human-anchored,
+   with the humans as reference. The model's surveillance rate carries a
+   headline number only if **surveillance F1 ≥ 0.60** with its bootstrap CI
+   reported. `military_defense` reported the same way but not gated (expected n
+   is small).
+2. **Always reported, never gated:** the full confusion matrix, raw agreement,
+   per-class precision/recall/F1, **Gwet's AC1**, and Cohen's κ. κ stays in the
+   paper — with its prevalence caveat stated — because omitting a statistic that
+   looks bad would be worse than explaining it.
+3. **Human–human agreement** reported on the same basis. If the two coders
+   disagree, the construct is underspecified and the rubric is what needs fixing.
+4. **The 200 are stratified on the model's label**, not drawn at random, so the
+   positive class is ~100 rather than ~6. Rates estimated from the stratified
+   sample are **reweighted to the population** before any rate is quoted, and the
+   stratification is stated wherever the number appears.
+5. Requires the classifier to have run over all citing patents first, since that
+   is the sampling frame.
+6. **If the gate fails**, only hand-labelled counts are reported, with their own
+   CIs, and the abstract says so.
+
+**Coder identity is disclosed.** Both coders are the paper's authors. Human–human
+agreement therefore measures whether two people applying our own rubric converge
+— internal consistency — and **not** whether the construct is valid to outsiders.
+That limitation is stated in the paper; we are not claiming independent validation.
