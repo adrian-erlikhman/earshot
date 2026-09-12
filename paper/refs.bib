@@ -1,0 +1,152 @@
+% Earshot — references.
+% RULE: nothing enters this file unless its arXiv/DOI page was opened and the
+% metadata read off it. Never cite from memory. Two citation errors were already
+% caught in the original project brief (see DECISION.md appendix).
+%
+% Status key in each entry's `note`:
+%   VERIFIED  — page opened, fields read directly
+%   RECHECK   — read via a summarised fetch; open the PDF before submission
+
+@article{kalluri2025surveillance,
+  author  = {Kalluri, Pratyusha Ria and Agnew, William and Cheng, Myra and
+             Owens, Kentrell and Soldaini, Luca and Birhane, Abeba},
+  title   = {Computer-vision research powers surveillance technology},
+  journal = {Nature},
+  year    = {2025},
+  doi     = {10.1038/s41586-025-08972-6},
+  url     = {https://www.nature.com/articles/s41586-025-08972-6},
+  note    = {VERIFIED. Preprint circulated as arXiv:2309.15084 under the title
+             "The Surveillance AI Pipeline" -- the journal version is RETITLED,
+             cite this form. Method: CVPR 1990--2020, >19k papers, >23k citing
+             patents, surveillance flagged by a hand-built keyword list
+             (their App. F.1), plus 100 papers + 100 patents hand-coded by six
+             annotators. NOT 19,000 hand-coded.}
+}
+
+@article{zhang2025impacts,
+  author    = {Zhang, Yu},
+  title     = {Internal and External Impacts of Natural Language Processing Papers},
+  booktitle = {Proceedings of the 63rd Annual Meeting of the Association for
+               Computational Linguistics (Volume 2: Short Papers)},
+  pages     = {488--494},
+  year      = {2025},
+  url       = {https://aclanthology.org/2025.acl-short.37/},
+  note      = {VERIFIED. arXiv:2505.16061. Built ACL Anthology -> OpenAlex ->
+               Reliance on Science: 24,821 papers, 21,104 mapped (85%), 20,218
+               patent links. Ranks subfields by citation VOLUME; does not
+               examine what the patents are for. THE precedence citation --
+               never claim to be first to link NLP papers to patents.}
+}
+
+@article{marx2022reliance,
+  author  = {Marx, Matt and Fuegi, Aaron},
+  title   = {Reliance on Science by Inventors: Hybrid Extraction of
+             In-text Patent-to-Article Citations},
+  journal = {Journal of Economics and Management Strategy},
+  year    = {2022},
+  note    = {VERIFIED as the dataset's canonical citation. v65 used here:
+             Zenodo 10.5281/zenodo.21493744, pcs_oa_uspto.csv, 1,437,584,291
+             bytes, CC BY-NC 4.0, USPTO-only, grant years 2015--2025,
+             OpenAlex-keyed. Full-file field distributions measured directly over
+             all 34,825,379 rows: reftype app 99.998% / exm 0.002% / no unk;
+             wherefound frontonly 62.3% / bodyonly 26.4% / both 11.2%.}
+}
+
+@article{alcacer2009applicant,
+  author  = {Alc{\'a}cer, Juan and Gittelman, Michelle and Sampat, Bhaven},
+  title   = {Applicant and examiner citations in U.S. patents:
+             An overview and analysis},
+  journal = {Research Policy},
+  volume  = {38},
+  number  = {2},
+  pages   = {415--427},
+  year    = {2009},
+  doi     = {10.1016/j.respol.2008.12.001},
+  note    = {VERIFIED. USPTO grants 2001--2003. Examiners add 41% of citations
+             at dyad level, 63% on the average patent, and all citations in 39%
+             of patents; examiner share highest in electronics/computing.
+             Cite the TABLE figures -- the abstract rounds 39 to 40.
+             Note: this is the three-author 2009 paper, not Alcacer and
+             Gittelman 2006.}
+}
+
+@inproceedings{wu2022acknowledgments,
+  author    = {Wu, Winston},
+  title     = {An Analysis of Acknowledgments in NLP Conference Proceedings},
+  booktitle = {Proceedings of the Fifth Workshop on Natural Language Processing
+               and Computational Social Science (NLP+CSS)},
+  year      = {2022},
+  url       = {https://aclanthology.org/2022.nlpcss-1.17/},
+  note      = {VERIFIED from the PDF. 7,838 acknowledgment sections, ACL+EMNLP
+               main proceedings 2005--2021. Table 1: DARPA 920, AFRL 161,
+               IARPA 158, ARO 154, ONR 147. Contains verbatim: "Notably, many
+               papers are funded by military agencies, which may raise ethical
+               concerns for some people." Does NOT break funding down by
+               subfield, does NOT extend past 2021, and the string "patent"
+               appears zero times. Semantic Scholar reports 0 citations.}
+}
+
+@article{widder2024basic,
+  author  = {Widder, David Gray and Gururaja, Sireesh and Suchman, Lucy},
+  title   = {Basic Research, Lethal Effects: Military AI Research Funding
+             as Enlistment},
+  journal = {Big Data \& Society},
+  year    = {2026},
+  doi     = {10.1177/20539517261458301},
+  note    = {arXiv:2411.17840 (Nov 2024). RECHECK -- SAGE returns 403 to
+             fetchers; confirm journal name and year by hand. Corpus figure is
+             DISPUTED between sources: one reading gives 46,175 DoD grant
+             solicitations narrowed to 7,187 PDFs, another gives 9,292. Resolve
+             from the PDF before citing any number. Method is discourse
+             analysis of funding calls, not citation tracing.}
+}
+
+@article{khlaaf2024mindthegap,
+  author  = {Khlaaf, Heidy and West, Sarah Myers and Whittaker, Meredith},
+  title   = {Mind the Gap: Foundation Models and the Covert Proliferation of
+             Military Intelligence, Surveillance, and Targeting},
+  journal = {arXiv preprint arXiv:2410.14831},
+  year    = {2024},
+  doi     = {10.48550/arXiv.2410.14831},
+  note    = {VERIFIED. On the workshop's own reading list.}
+}
+
+@inproceedings{srivastava2026triage,
+  author    = {Srivastava, Utkarsh and Ray, Rahul D. and Mohapatra, Rishi},
+  title     = {From Speech Recognition to Algorithmic Triage: How Post-9/11
+               Intelligence Automation Reconfigured Power, Bias, and Accountability},
+  booktitle = {AI for Peace Workshop, ICLR 2026},
+  year      = {2026},
+  note      = {Accepted at this workshop's FIRST edition and the closest
+               adjacent prior work -- voice AI as "algorithmic triage", proposing
+               a voice-specific sociotechnical audit framework. Qualitative, no
+               artifact. Cite to show we know the venue's own literature.
+               RECHECK -- retrieved via the ICLR virtual site; OpenReview kept
+               submissions private (public_submissions: false).}
+}
+
+@inproceedings{garcia2026weaponization,
+  author    = {Garcia, Noa and Katirai, Amelia},
+  title     = {The Weaponization of Computer Vision: Tracing Military-Surveillance
+               Ties through Conference Sponsorship},
+  booktitle = {ACM Conference on Fairness, Accountability, and Transparency (FAccT)},
+  year      = {2026},
+  doi       = {10.1145/3805689.3806535},
+  note      = {arXiv:2604.07803. VERIFIED. NOTE: Noa Garcia is the General Chair
+               of the workshop we are submitting to. Traces CV's ties via
+               conference sponsorship rather than patents. Every claim adjacent
+               to this must be exact.}
+}
+
+@article{derassenfosse2019gestation,
+  author  = {de Rassenfosse, Ga{\'e}tan and Jaffe, Adam and Raiteri, Emilio},
+  title   = {Estimating the uses and benefits of federal government procurement
+             for innovation},
+  journal = {PLOS ONE},
+  year    = {2019},
+  doi     = {10.1371/journal.pone.0218927},
+  note    = {RECHECK -- title and exact framing to be confirmed from the DOI
+             page. Reported to cover gestation lags across 228,389 federal
+             contracts and to find SBIR the fast channel. Relevant only if the
+             procurement framing returns.}
+}
