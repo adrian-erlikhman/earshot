@@ -132,9 +132,9 @@ def call(prompt: str, model: str, temperature: float, key: str) -> dict | None:
     return out
 
 
-def load_meta() -> list[dict]:
+def load_meta(meta_dir: Path | None = None) -> list[dict]:
     recs = []
-    for f in sorted(META.glob("*.json")):
+    for f in sorted((meta_dir or META).glob("*.json")):
         try:
             r = json.loads(f.read_text(encoding="utf-8"))
         except Exception:
@@ -156,10 +156,12 @@ def main() -> None:
     ap.add_argument("--max-spend", type=float, default=10.0,
                     help="abort before exceeding this many dollars in one run")
     ap.add_argument("--out", default="patent_labels.csv")
+    ap.add_argument("--meta-dir", default=None,
+                    help="e.g. control_meta or speech_meta; each arm keeps its own cache")
     a = ap.parse_args()
 
     key = api_key()
-    recs = load_meta()
+    recs = load_meta(ROOT / "data" / "interim" / a.meta_dir if a.meta_dir else None)
     if a.limit:
         recs = recs[: a.limit]
     print(f"[in   ] {len(recs):,} patents with usable metadata")
