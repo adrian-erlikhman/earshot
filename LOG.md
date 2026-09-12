@@ -345,3 +345,41 @@ support a claim here. The off-corpus speech arm is the only route to that
 subfield, and it needs the same age censoring before it is compared to anything.
 
 **Spend:** $0.00.
+
+## 2026-09-11 (Fri, later) — classifier built and validated; first spend
+
+**OpenRouter key received and rotated** (different prefix from the leaked one). Verified live.
+
+**`src/classify_patents.py`** — model sees exactly `configs/patent_rubric.md`
+plus one patent's title/assignee/abstract. Human coders see the same, otherwise
+κ compares two different tasks. Every call cached by md5(model+prompt+params);
+every call's cost logged; `--max-spend` aborts before a budget overrun.
+
+**Pilot: 60 patents, google/gemini-2.5-flash-lite, temp 0. Cost $0.0125.**
+All 60 came back `neither`. Inspected the rationales: correct. The sample is
+ontology search, drug discovery, a Surface hinge patent, word embeddings, input
+method editors — genuinely non-surveillance commercial NLP.
+
+**Positive control (7 cases built from the rubric's own worked examples): 6/7.**
+The classifier produces all four labels and gets clear cases right, so the
+all-`neither` pilot is a property of the sample, not a stuck model.
+
+**The one miss matters.** Speaker diarization with no stated application → model
+said `neither`; the rubric lists that case explicitly under
+`dual_use_ambiguous`. So the model **under-calls ambiguity and defaults to
+`neither` even against an explicit instruction**. That biases our headline
+DOWNWARD. Quantifying it is exactly what the human gold set is for, and if κ is
+poor this is the likely reason.
+
+**Projected full-corpus cost: ~$1.90** for 9,048 patents. Well inside budget.
+
+**Caveat on the pilot sample:** those 60 are the alphabetically-first patent ids
+in the cache, not a random draw. No rate may be quoted from them.
+
+**Oddity worth chasing:** "Multiple position input device cover" (a Surface hinge
+patent) and "Drug discovery methods" appear in our citing-patent set. Those
+citing an ACL paper is plausible but surprising, and could indicate false
+positives in the Reliance on Science linkage. Check a handful by hand before
+trusting the denominator.
+
+**Spend to date: $0.0125.**
