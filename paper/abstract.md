@@ -1,3 +1,5 @@
+> **Numbers superseded by paper/BRIEF.md (12 Sept 2026). Do not take figures from this file.**
+
 # Earshot — abstract draft
 
 **Submission format (verified against the live Google Form):** pasted text, no
@@ -18,7 +20,7 @@ until the script behind them has run. The claim id in each bracket maps to
 > verifying a claimed identity is not the same as picking someone out of a
 > population.
 
-**278 characters.** ✅ fits.
+**234 characters.** ✅ fits.
 
 ---
 

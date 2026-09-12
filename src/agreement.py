@@ -1,4 +1,4 @@
-"""Stage 9 — agreement statistics, per rubric AMENDMENT v1.1.
+"""Stage 9 — agreement statistics, per rubric AMENDMENTS v1.1 (gate) and v1.2 (redaction).
 
 The v1 rule (omnibus Cohen's κ ≥ 0.6) was withdrawn because κ collapses under
 skewed prevalence: two coders each 95% accurate score κ≈0.54 when one class is
@@ -8,7 +8,7 @@ So: **the gate is per-class F1 on `surveillance`, humans as reference.**
 κ is still reported, with its caveat, because hiding an unflattering statistic is
 worse than explaining one.
 
-Because the gold set is stratified on the model label, every population rate is
+Because the gold set is stratified on model label x surveillance-type IPC class, every population rate is
 reweighted using data/goldset/strata.json. This script refuses to print an
 unweighted population rate.
 
@@ -76,7 +76,7 @@ def main() -> None:
 
     df = (A[["patent_id", "label", "confidence"]].rename(columns={"label": "a", "confidence": "conf_a"})
           .merge(B[["patent_id", "label"]].rename(columns={"label": "b"}), on="patent_id")
-          .merge(M.rename(columns={"model_label": "m"})[["patent_id", "m"]], on="patent_id"))
+          .merge(M.rename(columns={"model_label": "m"})[["patent_id", "m", "stratum"]], on="patent_id"))
     for c in ("a", "b", "m"):
         df[c] = df[c].astype(str).str.strip().str.lower()
     bad = df[~df["a"].isin(LABELS) | ~df["b"].isin(LABELS)]
@@ -121,10 +121,10 @@ def main() -> None:
     print("\n=== POPULATION-REWEIGHTED RATES (gold set is stratified; raw rates are meaningless) ===")
     w = strata["weights"]; pop_total = sum(strata["population"].values())
     for c in LABELS:
-        num = sum(w.get(s, 0) * ((df["m"] == s) & (df["a"] == c) & (df["b"] == c)).sum()
+        num = sum(w.get(s, 0) * ((df["stratum"] == s) & (df["a"] == c) & (df["b"] == c)).sum()
                   for s in strata["sample"])
         print(f"   {c:<20} reweighted share of all citing patents: {100*num/max(pop_total,1):.2f}%")
-    print("   (human-consensus labels, reweighted by model-label stratum)")
+    print("   (human-consensus labels, reweighted by stratum: model label x IPC class)")
 
     RESULTS.mkdir(parents=True, exist_ok=True)
     (RESULTS / "agreement.json").write_text(json.dumps({

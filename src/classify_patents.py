@@ -156,6 +156,8 @@ def main() -> None:
     ap.add_argument("--max-spend", type=float, default=10.0,
                     help="abort before exceeding this many dollars in one run")
     ap.add_argument("--out", default="patent_labels.csv")
+    ap.add_argument("--redact-assignee", action="store_true",
+                    help="rubric v1.2 primary specification; true assignee still recorded")
     ap.add_argument("--meta-dir", default=None,
                     help="e.g. control_meta or speech_meta; each arm keeps its own cache")
     a = ap.parse_args()
@@ -174,7 +176,10 @@ def main() -> None:
     def work(rec):
         if _spend["cost"] > a.max_spend:
             return None
-        d = call(build_prompt(rec), a.model, a.temperature, key)
+        prompt_rec = dict(rec)
+        if a.redact_assignee:
+            prompt_rec["assignee"] = "(redacted)"   # rubric v1.2: never judge on the applicant
+        d = call(build_prompt(prompt_rec), a.model, a.temperature, key)
         if not d:
             return None
         p = d.get("parsed") or {}

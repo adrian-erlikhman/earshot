@@ -198,3 +198,36 @@ paper for the shape of the label distribution, not for disagreement.
 agreement therefore measures whether two people applying our own rubric converge
 — internal consistency — and **not** whether the construct is valid to outsiders.
 That limitation is stated in the paper; we are not claiming independent validation.
+
+---
+
+# AMENDMENT v1.2 — 2026-09-12, before any gold-set labelling
+
+**The assignee is now REDACTED — for the model and for both human coders.**
+Judge from **title and abstract only**. This supersedes "title, abstract, and
+assignee" in *What you are judging* above.
+
+**Why.** The rubric already said a defence-contractor assignee alone is not
+sufficient and the text must say it. The model did not reliably obey that. A
+targeted test re-classified 26 patents twice at temperature 0 — assignee shown,
+assignee hidden:
+
+- consistency: the unredacted re-call reproduced the original label 26/26
+- **4 of 16 non-`neither` labels (25%) changed when the assignee was hidden**
+- 2 of 15 patents with a defence-sounding assignee changed
+
+Three of the four flips were over-labels driven by the applicant's name:
+a botulism antitoxin (Academy of Military Medical Sciences) `military` → `neither`;
+a network-attack simulation (Triad National Security) `military` → `neither`;
+a video system (NEC) `surveillance` → `dual_use_ambiguous`. The fourth (Boeing,
+object and activity tracking) moved the other way and reflects instability on
+genuinely ambiguous text rather than assignee bias.
+
+An earlier test reported 0 of 60 labels moving under redaction. It was
+uninformative: those 60 all had benign commercial assignees, so the assignee had
+nothing to push against. It is withdrawn as evidence.
+
+**Rule, fixed now:** primary classification is assignee-redacted for every
+labeller. The assignee-shown run is retained and reported as a sensitivity
+analysis. The true assignee is still recorded in the data for the assignee
+concentration analysis — it is only hidden at the moment of judgement.

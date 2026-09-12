@@ -41,11 +41,26 @@ IPC_SURVEILLANCE = {
 
 
 def boot_ci(x: np.ndarray, n: int = 10000, seed: int = 0) -> tuple[float, float]:
+    """95% interval for a rate.
+
+    For binary 0/1 data this returns the exact JEFFREYS interval, not a bootstrap.
+    A bootstrap of an all-zero sample collapses to [0, 0], which "excludes" any
+    positive base rate and flags a zero-event cell as significant. That produced
+    six spurious *** marks in the H1 table on 2026-09-12. Rare events are the whole
+    regime here (surveillance ~1%), so exact intervals are required, not optional.
+    """
+    x = np.asarray(x, dtype=float)
     if len(x) == 0:
         return float("nan"), float("nan")
+    if np.isin(x, (0.0, 1.0)).all():
+        from scipy.stats import beta
+        k, m = int(x.sum()), len(x)
+        lo = 0.0 if k == 0 else float(beta.ppf(0.025, k + 0.5, m - k + 0.5))
+        hi = 1.0 if k == m else float(beta.ppf(0.975, k + 0.5, m - k + 0.5))
+        return lo, hi
     rng = np.random.default_rng(seed)
-    m = x[rng.integers(0, len(x), size=(n, len(x)))].mean(axis=1)
-    return float(np.percentile(m, 2.5)), float(np.percentile(m, 97.5))
+    b = x[rng.integers(0, len(x), size=(n, len(x)))].mean(axis=1)
+    return float(np.percentile(b, 2.5)), float(np.percentile(b, 97.5))
 
 
 def load() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
@@ -147,35 +162,59 @@ def main() -> None:
         print("   Without it the headline rate is uninterpretable. Do not draft around it.")
 
     # ---------------------------------------------------------------- B. H1
-    print(f"\n[B] H1 — surveillance-citation rate BY SUBFIELD (papers <= {a.max_year})")
+    print()
+    print(f"[B] H1 — surveillance-citation rate BY SUBFIELD (papers <= {a.max_year})")
+    print("    Fisher exact per subfield vs rest of corpus; Benjamini-Hochberg q (pre-registered).")
+    print("    A lone flag on one event is what chance produces across ten tests.")
     pw = papers[papers["year"] <= a.max_year].copy()
     pw["text"] = pw["title"].fillna("") + " " + pw["abstract"].fillna("")
     surv_pats = set(lab.loc[lab["label"] == "surveillance", "patent_norm"])
     l2 = links[links["patent_norm"].isin(set(lab["patent_norm"]))]
     paper_has_surv = set(l2.loc[l2["patent_norm"].isin(surv_pats), "oaid"])
+    pw["surv"] = pw["oaid"].isin(paper_has_surv)
 
+    from scipy.stats import fisher_exact
     rules = load_rules()
-    base = pw["oaid"].isin(paper_has_surv).to_numpy(dtype=float)
+    base = pw["surv"].to_numpy(dtype=float)
     blo, bhi = boot_ci(base)
-    print(f"   {'BASE (all papers)':<24}{len(pw):>8,}{base.sum():>8,.0f}{100*base.mean():>8.2f}%  [{100*blo:.2f}, {100*bhi:.2f}]")
+    print(f"   {'BASE (all papers)':<24}{len(pw):>8,}{int(base.sum()):>6,}{100*base.mean():>8.2f}%  [{100*blo:.2f}, {100*bhi:.2f}]")
     rows = []
     for name, rx in rules.items():
-        m = pw["text"].str.contains(rx, na=False)
-        s = pw[m]
-        if len(s) < 5:
-            rows.append({"subfield": name, "n": int(len(s)), "rate": None}); continue
-        f = s["oaid"].isin(paper_has_surv).to_numpy(dtype=float)
-        lo, hi = boot_ci(f)
-        rows.append({"subfield": name, "n": int(len(s)), "n_surv": int(f.sum()),
-                     "rate": float(f.mean()), "ci": [lo, hi],
-                     "excludes_base": bool(lo > base.mean() or hi < base.mean())})
-    rows.sort(key=lambda r: -(r["rate"] or -1))
+        msk = pw["text"].str.contains(rx, na=False)
+        inn, outs = pw[msk], pw[~msk]
+        if len(inn) < 5:
+            rows.append({"subfield": name, "n": int(len(inn)), "rate": None})
+            continue
+        in_s = int(inn["surv"].sum()); in_n = len(inn) - in_s
+        out_s = int(outs["surv"].sum()); out_n = len(outs) - out_s
+        _, pval = fisher_exact([[in_s, in_n], [out_s, out_n]])
+        lo, hi = boot_ci(inn["surv"].to_numpy(dtype=float))
+        rows.append({"subfield": name, "n": int(len(inn)), "n_surv": in_s,
+                     "rate": in_s / len(inn), "ci": [lo, hi], "p": float(pval)})
+
+    tested = [r for r in rows if r.get("rate") is not None]
+    order = sorted(range(len(tested)), key=lambda i: tested[i]["p"])
+    mtot = len(tested)
+    prev = 1.0
+    for rank in range(mtot - 1, -1, -1):
+        i = order[rank]
+        qv = min(prev, tested[i]["p"] * mtot / (rank + 1))
+        tested[i]["q"] = float(min(qv, 1.0))
+        prev = tested[i]["q"]
+    for r in tested:
+        r["significant"] = bool(r["q"] < 0.05)
+
+    rows.sort(key=lambda r: -(r["rate"] if r.get("rate") is not None else -1))
+    print(f"   {'subfield':<24}{'n':>8}{'surv':>6}{'rate':>9}  {'95% CI':<17}{'p':>8}{'q(BH)':>9}")
     for r in rows:
-        if r["rate"] is None:
-            print(f"   {r['subfield']:<24}{r['n']:>8,}   (n too small)"); continue
-        print(f"   {r['subfield']:<24}{r['n']:>8,}{r['n_surv']:>8,}{100*r['rate']:>8.2f}%  "
-              f"[{100*r['ci'][0]:.2f}, {100*r['ci'][1]:.2f}]{'  ***' if r['excludes_base'] else ''}")
-    print("   *** = CI excludes the base rate")
+        if r.get("rate") is None:
+            print(f"   {r['subfield']:<24}{r['n']:>8,}   (n too small)")
+            continue
+        flag = "  SIG" if r["significant"] else ""
+        print(f"   {r['subfield']:<24}{r['n']:>8,}{r['n_surv']:>6}{100*r['rate']:>8.2f}%  "
+              f"[{100*r['ci'][0]:.2f}, {100*r['ci'][1]:.2f}]{r['p']:>9.3f}{r['q']:>9.3f}{flag}")
+    nsig = sum(1 for r in tested if r["significant"])
+    print(f"   {nsig} of {mtot} subfields significant at BH q < 0.05")
 
     # ---------------------------------------------------------------- C. H2
     print("\n[C] H2 — surveillance share of citing patents over time")

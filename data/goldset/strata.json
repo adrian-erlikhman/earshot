@@ -1,0 +1,23 @@
+{
+  "rubric": "v1.2",
+  "seed": 20260913,
+  "stratum_variable": "model label x surveillance-type IPC class",
+  "population": {
+    "neither_other": 980,
+    "neither_surv_ipc": 21,
+    "model_surveillance": 7,
+    "model_dual_use": 4
+  },
+  "sample": {
+    "neither_other": 168,
+    "neither_surv_ipc": 21,
+    "model_surveillance": 7,
+    "model_dual_use": 4
+  },
+  "weights": {
+    "neither_other": 5.833333333333333,
+    "neither_surv_ipc": 1.0,
+    "model_surveillance": 1.0,
+    "model_dual_use": 1.0
+  }
+}

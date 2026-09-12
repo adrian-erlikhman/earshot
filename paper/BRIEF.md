@@ -1,6 +1,6 @@
 # EARSHOT — everything needed to write the abstract
 
-- **For:** Adrian Erlikhman — **prepared** 12 September 2026
+- **For:** Adrian Erlikhman — **updated** Saturday 12 September 2026
 - **Venue:** AI for Peace workshop @ NeurIPS 2026, Paris, 12–13 December
 - **Deadline:** Mon 21 Sept AoE = **Tue 22 Sept, 05:00 Pacific**
 - **Repo:** https://github.com/adrian-erlikhman/earshot (public)
@@ -11,253 +11,179 @@
 
 | | |
 |---|---|
-| Submission mechanism | **Google Form. Pasted text. No file upload.** |
-| Abstract field | **2,500 characters max** (~380 words). References count against it. |
+| Submission | **Google Form. Pasted text. No file upload.** |
+| Abstract field | **2,500 characters max.** References count against it. |
 | TL;DR field | **300 characters max**, separate |
-| Figures | **Cannot be submitted.** The hero figure exists only for the Paris poster. |
+| Figures | **Cannot be submitted.** Poster only. |
 | Review | Single-blind |
-| Work status | Published, novel, and in-progress all accepted |
-| Attendance | Gating question on the form; no travel funding. Adrian attends, presents solo. |
+| Attendance | Gating on the form; no travel funding. Adrian presents. |
 
-**Budget your characters.** At 2,500 you get roughly: 2 sentences of setup,
-3 of method, 2 of results, 2 of limits. **Four numbers maximum.** Every number
-you add costs a clause of argument.
+Four numbers maximum. Every number costs a clause of argument.
 
 ---
 
-## 2. The one-sentence version
+## 2. Where the evidence landed — read this first
 
-> We linked 127,851 NLP papers to the 9,048 patents citing them and classified
-> what those patents are for — and the honest finding is both a number and a
-> limit on what the number can mean.
+The data now points clearly at the framing we committed to before any results
+existed. Surveillance-classified patents are **rare** among patents citing NLP
+research, are **not distinguishable** from science-citing patents in general at the
+sample sizes we have, and show **no concentration in any subfield**. That is not a
+failed study. The claim that NLP research feeds surveillance is made constantly, by
+critics and defenders alike, on the strength of this kind of evidence — and we can
+now say how little the public patent record can actually settle.
+
+The method work is the part that is solid and new, and it is where the abstract
+should spend its sentences.
 
 ---
 
-## 3. Numbers that are LOCKED — safe to use
+## 3. Pipeline numbers — locked
 
-Each has a script and a results file behind it in `CLAIMS.md`.
-
-| # | Number | Detail |
+| # | Number | Meaning |
 |---|---|---|
-| 1 | **127,851** | ACL Anthology papers ingested, 1,719 volumes, 1952–2026 |
-| 2 | **69,327** | resolve to OpenAlex — 98.9% of all DOI-bearing papers |
-| 3 | **26,085** | patent→paper citation links |
-| 4 | **9,048** | distinct USPTO patents citing ≥1 ACL paper |
-| 5 | **5,008** | distinct ACL papers cited by ≥1 patent |
-| 6 | **24,829 vs 24,821** | our Zhang replication vs Zhang's own count — **eight apart** |
-| 7 | **91.6%** | of our links are front-page-only (vs **62.3%** file-wide) |
-| 8 | **99.998%** | of all 34.8M citation rows are applicant-added, not examiner |
-| 9 | **2,748,170** | distinct patents in RoS v65 — so ACL-citing patents are **0.33%** of all science-citing patents |
-| 10 | **1.02%** | **of NLP-citing patents classified `surveillance`** — 10 of 978, CI **[0.53%, 1.81%]** |
-| 11 | **0.2%** | classified `dual_use_ambiguous`; **98.8%** `neither` |
-
-### The replication is your credibility anchor
-
-Restricted to Zhang's venues and years, our pipeline returns **24,829 papers
-against his 24,821**. Say this in the abstract. It is one clause and it
-pre-empts the obvious reviewer question about whether our numbers can be trusted.
+| 1 | **127,851** | ACL Anthology papers, 1952–2026 |
+| 2 | **69,327** | resolve to OpenAlex |
+| 3 | **26,085** | patent-to-paper citation links |
+| 4 | **9,048** | distinct USPTO patents citing an ACL paper |
+| 5 | **24,829 vs 24,821** | our replication of Zhang vs his own count — eight apart |
+| 6 | **0.33%** | ACL-citing patents as a share of all 2,748,170 science-citing patents |
+| 7 | **91.6%** | of our links are front-page only (vs 62.3% for patents generally) |
 
 ---
 
-## 4. Numbers that are WITHDRAWN — do not use
+## 4. Results — provisional (1,012 treatment, 366 control patents classified)
 
-| Withdrawn | Why |
+Assignee-redacted is the primary specification (see section 6).
+
+| Measure | Value |
 |---|---|
-| "88.1% of core venues" | `venue_key` bug excluded every pre-2020 ACL/EMNLP/NAACL paper |
-| "13.7% vs 7.2%" speech vs text | a 6,000-per-query cap in my own code; truncation is relevance-ordered, so it enriched for heavily-cited papers in exactly the inflating direction |
-| pooled 7.23% subfield ranking | right-censored — recent papers cannot yet have been cited |
-| "positive control 6/7" | circular; cases came from the rubric the model was handed |
+| Surveillance, ACL-citing patents | **7 of 1,012 = 0.69%** (CI 0.31–1.35%) |
+| Military / defence | 0 (CI 0–0.25%) |
+| Dual-use / ambiguous | 4 = 0.40% |
+| Surveillance, science-citing control | **1 of 366 = 0.27%** (CI 0.03–1.27%) |
+| Risk ratio, treatment vs control | 1.95x (CI 0.36–4.34), Fisher p = 0.69 |
+| Subfields significant for surveillance | **0 of 10** (Benjamini–Hochberg q < 0.05) |
+| Time trend | 0.65% (2018–20) vs 0.73% (2021–23), flat |
+
+**Do not report the treatment-vs-control gap as a finding or as a null.** It is
+underpowered: detecting 0.69% vs 0.27% at 80% power needs roughly 4,300 patents per
+arm. Report it as a bound.
 
 ---
 
-## 5. The headline result, and what it actually supports
+## 5. The three findings you can actually write around
 
-**1.02% of NLP-citing patents are classified `surveillance`** (10/978, CI
-[0.53%, 1.81%]). That is a **low** rate, and the low rate is the story.
+**A. Examiner classes overcount.** Of 26 patents that patent examiners placed in a
+surveillance-type classification (speaker identification, biometrics, alarms), our
+rubric codes **only 2 as surveillance** — 21 as neither and 3 as dual-use. In a hand
+inspection of the 19 such patents from the first classification run, **17 were
+consumer voice assistants that recognise their own user** — the phone's owner, not a
+watchlist. A method that counts patents by classification code or keyword, as prior
+work on computer vision did, would score these as surveillance. This is the concrete
+payoff of the authentication-versus-identification distinction.
 
-### The ten, because they are the evidence
+**B. LLM classifiers read the applicant, not the claim.** When we hid the patent's
+assignee, **25% of the model's non-neutral labels changed** (4 of 16). A botulism
+antitoxin was called military because its applicant is a military medical academy.
+Redacting the assignee fixes this by construction. Anyone using an LLM to classify
+patents for this question needs to know it.
 
-| Assignee | Patent |
-|---|---|
-| **HRL Laboratories** (defense lab) | Social media mining for **early detection of civil unrest events** |
-| Microsoft | Intelligent assistant — determines identity and tracks a person in an environment |
-| Microsoft | Computationally-efficient **human-identifying** smart assistant |
-| Microsoft | **Entity-tracking** computing system, across sensors |
-| NEC Corporation | Video system for environments with "safety concerns" |
-| NEC Labs America | Video camera system predicting future events |
-| Conduent | Neural networks for **target identification from text**, incl. hate speech |
-| IBM | Neural mapping — monitors and compares neural activity between users |
-| Educational Testing Service | Detecting **plagiarized spoken responses** |
-| Arizona Board of Regents | Fake-news detection via user embeddings |
+**C. The record is thin where it is most cited.** Surveillance-classified patents
+are well under 1% of NLP-citing patents, and no subfield stands out. The evidence
+the dual-use debate relies on cannot, at present, carry the weight put on it.
 
-These are not false positives. A defense laboratory doing civil-unrest
-prediction from social media is precisely the transition the workshop's call
-describes. **Consider naming HRL in the abstract** — one concrete instance does
-more rhetorical work than a percentage.
-
----
-
-## 6. THE MISSING EXPERIMENT — now running
-
-Michael was right that something was missing, and it is in our own
-pre-registered plan:
-
-> **Baseline/control (required):** the same surveillance-classification rate
-> over patents citing a matched set of non-NLP papers. **Without this control,
-> any rate we report is uninterpretable** — patents in general cite
-> security-adjacent work.
-
-**Do not write the results sentence until this lands.** "1.02% of NLP-citing
-patents are surveillance" is meaningless alone. If science-citing patents in
-general are also ~1%, we have no finding. If they are 0.2%, we have a 5×
-enrichment and a real result.
-
-**Status:** 2,500 control patents sampled uniformly from the 2,739,122 that cite
-science but cite no ACL paper. Same file, same grant-year window, same
-classifier, same rubric — only the field of the cited science differs. Metadata
-fetching now, ~75 minutes, then classification (~$0.35).
-
-**Caveat to state:** this is "the average science-citing USPTO patent," **not**
-a field-matched control. A non-NLP-computer-science arm would be stronger and
-needs OpenAlex subject queries we have not run. List as a limitation.
+One concrete example is worth a clause: **HRL Laboratories' patent for early
+detection of civil unrest from social media** remains classified surveillance with
+the assignee hidden.
 
 ---
 
-## 7. THE POWER PROBLEM — read before drafting
+## 6. What changed since the last brief — do not reuse old numbers
 
-At a 1.02% base rate, detecting a difference against the control needs:
-
-| If the control rate is | n needed per arm |
-|---|---|
-| 0.05% | 885 ✅ |
-| 0.10% | 1,029 ✅ |
-| 0.20% | 1,409 ⚠️ |
-| 0.50% | 4,343 ❌ |
-
-2,500 per arm covers a control rate down to ~0.25%. **If the control comes back
-near 0.5%, the comparison will be underpowered and we must say so rather than
-report a non-significant difference as if it were a null.**
-
-**Consequence for H1.** With **10** surveillance patents in the treatment arm,
-the pre-registered subfield ordering cannot be tested. Even classifying all
-9,048 yields only ~92 surveillance cases across ten subfields. **H1 is
-underpowered and should not be claimed.** Do not put a subfield ranking in the
-abstract; say the distribution is reported and that cell sizes preclude
-per-subfield inference.
+| Old | Now | Why |
+|---|---|---|
+| 1.02% surveillance | **0.69%** | applicant-name bias; primary is now assignee-redacted |
+| "0 in-text surveillance supports proximity" | **uninformative** | 0 of 89 has an upper bound of 2.78%, above the overall rate |
+| authorship flagged significant | **0 of 10 significant** | the flag was a bootstrap artifact; corrected to the pre-registered test |
+| redaction test "0 of 60 moved" | **withdrawn** | those patents had benign assignees; the proper test found 25% |
+| positive control 6 of 7 | **withdrawn** | its cases came from the rubric the model was given |
+| control has more military | **artifact** | 3 military dropped to 1 under redaction |
 
 ---
 
-## 8. The two limits — these are load-bearing, put them early
+## 7. The two limits — put them early
 
-1. **91.6% of our links are applicant-added front-page citations.** These
-   evidence prior-art disclosure, not demonstrated use. We measure **proximity,
-   not transmission**. Note this is *worse* for us than patents generally, where
-   front-page-only is 62.3% — NLP citations are unusually disclosure-shaped.
-2. **Patent abstracts are drafted to avoid naming an application.** So a low
-   measured rate bounds *what the public record can show*, not what the field
-   does.
-
-**Limit 2 is the second finding, and at a 1% rate it may be the primary one:**
-the citation trail that both critics and defenders of this research appeal to
-cannot currently settle the question, and we quantify how far short it falls.
+1. **91.6% of links are front-page citations**, which show prior-art disclosure, not
+   use. We measure proximity, not transmission.
+2. **Patent abstracts are written to avoid naming an application**, so a low rate
+   bounds what the record can show, not what the field does.
 
 ---
 
-## 9. The framing decision — fixed in advance, do not revisit
+## 8. What the method paragraph must contain
 
-If the control shows no enrichment, **that is still the paper.** The finding
-becomes: the public patent record cannot settle whether NLP research feeds
-surveillance, and here is the measured size of that gap.
-
-This was decided before the numbers existed. It matters because at a venue whose
-first line rejects the normalisation of AI for surveillance, a null presented
-badly reads as exoneration. Presented as a measurement of evidentiary
-insufficiency, it is a contribution.
-
----
-
-## 10. What the method paragraph must contain
-
-Non-negotiable, because these are the contribution:
-
-- **Operator vs subject** — where the person analysed is also the user and the
-  beneficiary, it is not surveillance.
-- **Authentication vs identification** — verifying a claimed identity is not
-  determining who someone is from a population.
-
-These two distinctions are why this is not Kalluri's keyword list. A
-call-centre voiceprint verification and a fraud-database voice match are the
-same technology on opposite sides of the line. **Speech patents sit on that line
-constantly.**
-
-Also mention: **two human coders, the authors**, labelling a stratified sample
-independently, blind to the model and to each other, from the same inputs the
-model receives. Disclose that the coders are the authors — human–human agreement
-is internal consistency, not independent validation.
+- **Operator vs subject** — if the person analysed is also the user and beneficiary,
+  it is not surveillance.
+- **Authentication vs identification** — verifying a claimed identity is not picking
+  someone out of a population. Speech patents sit on this line constantly.
+- **Assignee redacted** for the model and both human coders.
+- **Two coders, the authors**, labelling a stratified sample independently. Disclose
+  that they are the authors: agreement is internal consistency, not independent
+  validation.
+- Report per-class F1 and a prevalence-robust coefficient (Gwet's AC1) alongside
+  kappa, since one class dominates.
 
 ---
 
-## 11. Reliability reporting — say it this way
+## 9. Sunday 13 September — labelling session
 
-Cohen's κ alone is **uninterpretable** here. At 95% prevalence of one class, two
-coders each 95% accurate score κ≈0.54 while raw agreement stays at 0.93.
-Verified by simulation; the pre-registered κ gate was withdrawn on 11 Sept,
-before any labelling.
-
-Report: confusion matrix, raw agreement, **per-class F1 on `surveillance` (the
-gate, threshold 0.60)**, **Gwet's AC1**, and κ with its caveat. One clause in
-the abstract: *"we report per-class F1 and a prevalence-robust coefficient
-alongside κ, since one class dominates."*
+- 200 patents: 32 rare or boundary cases + 168 random `neither`.
+- Title and abstract only. **Do not look patents up. Do not open
+  `results/patent_labels.csv`** — it holds the model's labels, and it is public, so
+  the blind depends on us.
+- Only 7 model-surveillance items exist, so the surveillance-F1 check will be
+  indicative, not decisive. Say so if it is used.
+- Plus Michael's 50-link hand check of the citation data.
 
 ---
 
-## 12. Still outstanding
+## 10. Still running or outstanding
 
-- [ ] **Control classification** — running. **Blocks the results sentence.**
-- [ ] Gold set + agreement stats — Sunday, both coders
-- [ ] Michael's 50 RoS link hand-check — sheet built
-- [ ] Speech arm re-pull with cursor paging — OpenAlex rate-limited
-- [ ] IPC convergent validity — codes captured, needs the fetch
-- [ ] Open the two `RECHECK` citations in `refs.bib` (Widder et al., de Rassenfosse)
+- Control metadata fetch (about 430 of 2,500) — rerun the comparison when it lands.
+- Speech/speaker-ID arm — waiting on the OpenAlex rate limit.
+- Human agreement — Sunday.
+- Two citations still to open by hand: Widder et al. and de Rassenfosse et al.
 
 ---
 
-## 13. Titles
+## 11. Titles
 
-1. **Authentication Is Not Identification: Classifying the Patents That Cite
-   Language-Technology Research** ← recommended
-2. Proximity, Not Transmission: What the Patent Record Can and Cannot Show About
-   NLP's Path Into Surveillance ← use if the rate is low / control is null
+1. **Proximity, Not Transmission: What the Patent Record Can and Cannot Show About
+   NLP's Path Into Surveillance** — recommended now
+2. Authentication Is Not Identification: Classifying the Patents That Cite
+   Language-Technology Research
 3. Earshot: What Are the Patents Citing NLP Research Actually For?
 
-## 14. TL;DR (278 of 300 chars — fits)
+## 12. TL;DR (under 300 characters)
 
-> We linked 127,851 ACL Anthology papers to the patents citing them, then asked
-> what those patents are for. The distinction that decides it for speech:
-> verifying a claimed identity is not the same as picking someone out of a
-> population.
-
----
-
-## 15. Citations to use (all verified — see `refs.bib`)
-
-- **Kalluri et al., *Nature* 2025** — the template. CV papers → surveillance
-  patents. **Retitled from the arXiv preprint; cite the Nature title.** They
-  hand-coded 100 papers + 100 patents and scaled with a 30-keyword lexicon —
-  *not* 19,000 by hand. Our bar is lower than it looks.
-- **Zhang, ACL 2025 Short 488–494** — linked ACL papers to patents already.
-  **Never claim to be first.** Correct framing: prior work measured *whether*
-  NLP reaches patents; we ask *what those patents do*.
-- **Alcácer, Gittelman & Sampat, *Research Policy* 2009** — examiner citations.
-  Cite the table figures, not the abstract.
-- **Marx & Fuegi** — Reliance on Science v65.
-- **Srivastava et al., AI for Peace @ ICLR 2026** — "From Speech Recognition to
-  Algorithmic Triage." Accepted at this workshop's own first edition. Cite it.
-- **Garcia & Katirai, FAccT 2026** — the CV version via conference sponsorship.
-  **Noa Garcia is this workshop's General Chair.** Every adjacent claim must be exact.
+> We linked 127,851 ACL Anthology papers to the patents citing them, then asked what
+> those patents are for. The distinction that decides it for speech: verifying a
+> claimed identity is not the same as picking someone out of a population.
 
 ---
 
-## 16. Spend
+## 13. Citations (verified — see refs.bib)
 
-**$0.14** of $50. Control classification adds ~$0.35.
+- **Kalluri et al., Nature 2025** — computer vision to surveillance patents. Cite the
+  Nature title, not the arXiv one. Hand-coded 100 papers and 100 patents, then used
+  a keyword list.
+- **Zhang, ACL 2025** — linked ACL papers to patents first. Never claim to be first;
+  we ask what the patents are for.
+- **Alcácer, Gittelman and Sampat, Research Policy 2009** — examiner citations.
+- **Marx and Fuegi** — Reliance on Science.
+- **Srivastava et al., AI for Peace at ICLR 2026** — speech and algorithmic triage;
+  in this workshop's own first edition.
+- **Garcia and Katirai, FAccT 2026** — the computer-vision version. Noa Garcia chairs
+  this workshop.
+
+**Spend so far:** under $0.50 of the $50 budget.

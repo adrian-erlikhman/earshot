@@ -1,0 +1,27 @@
+arm,orig,shown,hidden,nonneither,defense,assignee,title,consistent,flipped
+treatment,surveillance,surveillance,dual_use_ambiguous,True,False,Nec Corporation, Video system using dual stage attention based recurrent neural network for &hellip;,True,True
+treatment,surveillance,surveillance,surveillance,True,True,"HRL Laboratories, LLC",Social media mining system for early detection of civil unrest events,True,False
+treatment,surveillance,surveillance,surveillance,True,False,"Microsoft Technology Licensing, LLC",Intelligent assistant,True,False
+treatment,surveillance,surveillance,surveillance,True,False,"Microsoft Technology Licensing, LLC",Computationally-efficient human-identifying smart assistant computer,True,False
+treatment,dual_use_ambiguous,dual_use_ambiguous,surveillance,True,False,THE BOEING COMPANY,Automated object and activity tracking in a live video feed,True,True
+treatment,surveillance,surveillance,surveillance,True,False,"Microsoft Technology Licensing, LLC",Entity-tracking computing system,True,False
+treatment,surveillance,surveillance,surveillance,True,False,"NEC Laboratories America, Inc.",Video camera device and system using recursive neural networks for future event prediction,True,False
+treatment,neither,neither,neither,False,True,"HRL Laboratories, LLC",Per-user accuracy measure for social network based geocoding algorithms,True,False
+treatment,surveillance,surveillance,surveillance,True,False,"CONDUENT BUSINESS SERVICES, LLC",Neural network systems and methods for target identification from text,True,False
+treatment,surveillance,surveillance,surveillance,True,False,INTERNATIONAL BUSINESS MACHINES CORPORATION,Neural mapping,True,False
+treatment,surveillance,surveillance,surveillance,True,False,Educational Testing Service,Systems and methods for automatic detection of plagiarized spoken responses,True,False
+treatment,dual_use_ambiguous,dual_use_ambiguous,dual_use_ambiguous,True,False,"Cisco Technology, Inc.",Video analysis using a deep fusion reasoning engine (DFRE),True,False
+treatment,surveillance,surveillance,surveillance,True,False,Arizona Board of Regents on Behalf of Arizona State University,Method and apparatus for detecting fake news in a social media network,True,False
+treatment,neither,neither,neither,False,True,NATIONAL UNIVERSITY OF DEFENSE TECHNOLOGY,Device and text representation method applied to sentence embedding,True,False
+treatment,neither,neither,neither,False,True,National University of Defense Technology,"Fact validation method and system, computer device and storage medium",True,False
+control,military_defense,military_defense,neither,True,True,"INSTITUTE OF MICROBIOLOGY AND EPIDEMIOLOGY, ACADEMY OF MILITARY MEDICAL SCIENCES, PR CHINA THE SECOND MILITARY MEDICAL UNIVERSITY",Mercaptonicotinic acid compound and preparation method and use thereof,True,True
+control,neither,neither,neither,False,True,THALES,Electrode-gel electrolyte assembly comprising a porous carbon material and obtained by radical polymerisation,True,False
+control,neither,neither,neither,False,True,"Lawrence Livermore National Security, LLC",Ultra low noise materials and devices for cryogenic superconductors and quantum bits,True,False
+control,neither,neither,neither,False,True,"The Henry M. Jackson Foundation for the Advancement of Military Medicine, Inc.",Methods for the measurement of post-traumatic stress disorder microRNA markers,True,False
+control,neither,neither,neither,False,True,Lockheed Martin Corporation,Antenna array calibration,True,False
+control,military_defense,military_defense,military_defense,True,True,Thales,"Method for detecting targets on the ground and in motion, in a video stream acquired with an airborne camera",True,False
+control,military_defense,military_defense,neither,True,True,"Triad National Security, LLC",Non-harmful insertion of data mimicking computer network attacks,True,True
+control,neither,neither,neither,False,True,"The Government of the United States of America, as represented by the Secretary of the Navy",Methane/oxygen rocket engine with specific impulse enhancement by hot helium infusion,True,False
+control,surveillance,surveillance,surveillance,True,True,Palantir Technologies Inc.,Context-aware network-based malicious activity warning systems,True,False
+control,neither,neither,neither,False,True,"National Technology & Engineering Solutions of Sandia, LLC",Block copolymers including poly(phenylene) and methods thereof,True,False
+control,neither,neither,neither,False,True,Airbus Defence and Space GmbH,Simulation of a complex system,True,False

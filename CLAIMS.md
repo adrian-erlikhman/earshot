@@ -50,3 +50,27 @@ These are other people's numbers. Each was checked by opening the source.
   model-summarized fetches, not the PDFs. Open both directly.
 - Widder/Gururaja/Suchman journal name — SAGE 403s to fetchers; DOI prefix
   suggests *Big Data & Society*. Confirm by hand.
+
+---
+
+## CURRENT STATUS — 2026-09-12 (supersedes conflicting rows above)
+
+Primary specification is **assignee-redacted** (rubric v1.2). All classified rates are
+**provisional**: 1,012 treatment and 366 control patents classified.
+
+| # | Claim | Value | Script | Results | Status |
+|---|---|---|---|---|---|
+| C5 | Surveillance share, ACL-citing patents | **7/1,012 = 0.69%** [0.31, 1.35] | `classify_patents.py --redact-assignee`, `analysis.py` | `patent_labels.csv`, `analysis.json` | 🟡 provisional |
+| C5s | Same, assignee shown (sensitivity) | 10/978 = 1.02% [0.53, 1.81] | `classify_patents.py` | `patent_labels_assignee_shown.csv` | sensitivity only |
+| C7 | Control: science-citing, no ACL | **1/366 = 0.27%** [0.03, 1.27]; RR 1.95x [0.36, 4.34]; p = 0.69 | `build_control.py`, `analysis.py` | `control_labels.csv` | 🟡 underpowered |
+| C16 | ACL-citing share of science-citing patents | 9,048 / 2,748,170 = **0.33%** | `build_control.py` | `control_meta.json` | ✅ |
+| C6c | H1: surveillance rate by subfield | **0 of 10** significant, BH q < 0.05; min p = 0.093 (1 event) | `analysis.py` | `analysis.json` | ✅ null, underpowered |
+| C8 | H2: time trend | 0.65% -> 0.73%, overlapping CIs | `analysis.py` | `analysis.json` | 🟡 |
+| C13 | In-text-citation ablation | 0/89, CI [0, 2.78] | `analysis.py` | `analysis.json` | ⚠️ uninformative, not support |
+| C14 | IPC convergent validity | F1 0.121; of 26 surveillance-class patents, 21 coded `neither` | `analysis.py` | `analysis.json` | ✅ class-based methods overcount |
+| C15 | Applicant-name bias in LLM labels | **4 of 16** non-`neither` labels (25%) flip under redaction | `redaction_test.py` | `redaction_test.csv` | ✅ |
+| C11/C12 | Human agreement | pending coding, Sun 13 Sept | `agreement.py` | `agreement.json` | ⬜ |
+
+**Withdrawn:** positive control 6/7 (circular); redaction test 0/60 (uninformative);
+H1 `***` flags (bootstrap artifact); in-text ablation as support; 1.02% as headline
+(assignee-biased).

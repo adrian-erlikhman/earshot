@@ -14,3 +14,11 @@ __pycache__/
 
 # Results ARE committed (they are the paper's evidence) except anything huge
 results/*.parquet
+
+# Gold-set ANSWER KEY: the model's label for each item. Must never be committed
+# before both coders finish, or the blind protocol is broken for anyone who can
+# read the repo (and this repo is public).
+data/goldset/_model_labels*
+
+# Quarantined outputs from a speech-arm run capped at 200 works per query. Stale; never use.
+results/STALE_*

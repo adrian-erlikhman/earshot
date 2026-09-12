@@ -1,0 +1,144 @@
+{
+  "coverage": 0.11184792219274978,
+  "n_labelled": 1012,
+  "n_patents": 9048,
+  "headline": {
+    "surveillance": 7,
+    "military_defense": 0,
+    "dual_use_ambiguous": 4,
+    "neither": 1001
+  },
+  "h1_subfields": [
+    {
+      "subfield": "authorship_stylometry",
+      "n": 106,
+      "n_surv": 1,
+      "rate": 0.009433962264150943,
+      "ci": [
+        0.001019793278954449,
+        0.04323844805405164
+      ],
+      "p": 0.09334533347084387,
+      "q": 0.9334533347084386,
+      "significant": false
+    },
+    {
+      "subfield": "sentiment_emotion",
+      "n": 1052,
+      "n_surv": 1,
+      "rate": 0.0009505703422053232,
+      "ci": [
+        0.00010258342026339527,
+        0.004434353434475279
+      ],
+      "p": 1.0,
+      "q": 1.0,
+      "significant": false
+    },
+    {
+      "subfield": "information_extraction",
+      "n": 1093,
+      "n_surv": 1,
+      "rate": 0.0009149130832570906,
+      "ci": [
+        9.873467811842324e-05,
+        0.004268331962406974
+      ],
+      "p": 1.0,
+      "q": 1.0,
+      "significant": false
+    },
+    {
+      "subfield": "dialogue_qa",
+      "n": 1361,
+      "n_surv": 1,
+      "rate": 0.0007347538574577516,
+      "ci": [
+        7.928963206989277e-05,
+        0.0034291261267497854
+      ],
+      "p": 1.0,
+      "q": 1.0,
+      "significant": false
+    },
+    {
+      "subfield": "speaker_id_voice",
+      "n": 15,
+      "n_surv": 0,
+      "rate": 0.0,
+      "ci": [
+        0.0,
+        0.15181666211439765
+      ],
+      "p": 1.0,
+      "q": 1.0,
+      "significant": false
+    },
+    {
+      "subfield": "speech_asr",
+      "n": 321,
+      "n_surv": 0,
+      "rate": 0.0,
+      "ci": [
+        0.0,
+        0.00778878079839803
+      ],
+      "p": 1.0,
+      "q": 1.0,
+      "significant": false
+    },
+    {
+      "subfield": "machine_translation",
+      "n": 1558,
+      "n_surv": 0,
+      "rate": 0.0,
+      "ci": [
+        0.0,
+        0.0016107296217907233
+      ],
+      "p": 0.39165130874326737,
+      "q": 1.0,
+      "significant": false
+    },
+    {
+      "subfield": "parsing_syntax",
+      "n": 2156,
+      "n_surv": 0,
+      "rate": 0.0,
+      "ci": [
+        0.0,
+        0.0011642807935336394
+      ],
+      "p": 0.2493160957645317,
+      "q": 1.0,
+      "significant": false
+    },
+    {
+      "subfield": "summarization",
+      "n": 435,
+      "n_surv": 0,
+      "rate": 0.0,
+      "ci": [
+        0.0,
+        0.005754640715585122
+      ],
+      "p": 1.0,
+      "q": 1.0,
+      "significant": false
+    },
+    {
+      "subfield": "retrieval_search",
+      "n": 219,
+      "n_surv": 0,
+      "rate": 0.0,
+      "ci": [
+        0.0,
+        0.011391580070866781
+      ],
+      "p": 1.0,
+      "q": 1.0,
+      "significant": false
+    }
+  ],
+  "max_year": 2019
+}
