@@ -14,8 +14,9 @@ script and a results file here. A claim with no row in this table does not ship.
 | C4b | Distinct patents citing speech/speaker-ID papers | **7,071** (17,565 links, 2,284 papers) | `src/probe_speaker_id.py` | `results/speaker_id_probe.json` | 🟡 |
 | C4c | Patent-proximity rate, text NLP vs speech | **7.2% vs 13.7%** — NOT yet matched on era/venue type | `src/join_patents.py`, `src/probe_speaker_id.py` | both | 🟡 |
 | C5 | Share of citing patents classified surveillance | — | `src/classify_patents.py` | `results/patent_labels.csv` | ⬜ |
-| C6 | Patent-proximity by subfield (pooled) | corpus **7.23%**; top summarization **10.84%**; **speaker_id 3.80%, authorship 3.98%** — H1 FAILS | `src/subfields_acl.py` | `results/subfield_rates.json` | 🟡 confounded by era |
-| C6b | Same, age-adjusted (papers <=2019) | — REQUIRED before C6 is reportable | `src/subfields_acl.py` | `results/subfield_rates.json` | ⬜ |
+| C6 | Patent-proximity by subfield (pooled) | corpus 7.23% — **right-censored, descriptive only, do not quote** | `src/subfields_acl.py` | `results/subfield_rates.json` | ⚠️ superseded by C6b |
+| C6b | Patent-proximity by subfield, papers <=2019 | base **20.57%**; dialogue_qa **33.80%**, summarization 33.56%, speech_asr 22.43% (ns), authorship **10.38%** (below) | `src/subfields_acl.py --max-year 2019` | `results/subfield_rates_le2019.json` | ✅ |
+| C6c | **H1 proper** — rate vs *surveillance-classified* patents | — NOT YET TESTED. C6/C6b measure any-patent citation, which is H1's denominator, not H1 | `src/classify_patents.py` | — | ⬜ blocked on key |
 | C7 | Control: same rate for non-NLP CS papers | — | `src/analysis.py` | `results/h1_control.csv` | ⬜ |
 | C8 | Time trend odds ratio (H2) | — | `src/analysis.py` | `results/h2_trend.json` | ⬜ |
 | C9 | Military funding acknowledgment rate by subfield (H3) | — | `src/funding.py` | `results/h3_funding.csv` | ⬜ |

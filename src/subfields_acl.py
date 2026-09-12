@@ -17,6 +17,7 @@ driving the ranking.
 """
 from __future__ import annotations
 
+import argparse
 import json
 import re
 import sys
@@ -60,10 +61,26 @@ def boot_ci(flags: np.ndarray, n: int = 10000, seed: int = 0) -> tuple[float, fl
 
 
 def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--max-year", type=int, default=None,
+                    help="drop papers published after this year. Patents take years to "
+                         "issue and cite, so recent papers are right-censored and their "
+                         "low rate is truncation, not signal.")
+    ap.add_argument("--min-year", type=int, default=None)
+    args = ap.parse_args()
+
     papers = pd.read_csv(INTERIM / "acl_openalex.csv", low_memory=False)
     papers = papers[papers["openalex_id"].notna()].copy()
     papers["oaid"] = papers["openalex_id"].astype(str).str.lstrip("Ww")
     papers["text"] = (papers["title"].fillna("") + " " + papers["abstract"].fillna(""))
+    if args.max_year:
+        before = len(papers)
+        papers = papers[papers["year"] <= args.max_year]
+        print(f"[censor] restricted to papers <= {args.max_year}: "
+              f"{len(papers):,} of {before:,} ({100*len(papers)/before:.1f}%)")
+    if args.min_year:
+        papers = papers[papers["year"] >= args.min_year]
+        print(f"[censor] and >= {args.min_year}: {len(papers):,}")
     print(f"[corpus] {len(papers):,} ACL papers with an OpenAlex id")
     print(f"         {papers['abstract'].notna().sum():,} have an abstract "
           f"({100*papers['abstract'].notna().mean():.1f}%) — rules see title only for the rest")
@@ -125,8 +142,9 @@ def main() -> None:
         print(f"{r['subfield']:<24}" + "".join(f"{c:>17}" for c in cells))
 
     RESULTS.mkdir(parents=True, exist_ok=True)
-    (RESULTS / "subfield_rates.json").write_text(
-        json.dumps({"corpus_rate": overall, "corpus_ci": [lo_a, hi_a],
+    tag = f"_le{args.max_year}" if args.max_year else ""
+    (RESULTS / f"subfield_rates{tag}.json").write_text(
+        json.dumps({"max_year": args.max_year, "corpus_rate": overall, "corpus_ci": [lo_a, hi_a],
                     "n_papers": int(len(papers)), "subfields": rows}, indent=2),
         encoding="utf-8")
     print(f"\n[done] -> results/subfield_rates.json")

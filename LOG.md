@@ -301,3 +301,47 @@ analysis should have come first — it needs no network and answers the
 comparison more cleanly, since every arm is drawn from one corpus indexed one way.
 
 **Spend:** $0.00.
+
+## 2026-09-11 (Fri, late) — CORRECTION: H1 is not tested yet, and age adjustment
+
+**Correction to the entry above.** I wrote "H1 FAILS as pre-registered." That is
+wrong and the heading overstates what was measured.
+
+H1 is about papers cited by **surveillance-classified** patents. What
+`subfields_acl.py` computes is papers cited by **any** patent. That is the
+denominator of H1, not H1. The two can point opposite ways: `dialogue_qa` reaches
+1,642 patents that are plausibly voice assistants and call-centre routing, while
+`speaker_id_voice` reaches 5 patents that could be entirely border control. Raw
+citation counts cannot separate those, and the whole point of the project is that
+separation.
+
+**H1 remains untested until the patents are classified.** Blocked on the
+OpenRouter key.
+
+**What IS established** is a precursor result: which subfields reach patents at all.
+
+**Age adjustment (papers <= 2019, n=18,450, base 20.57%):**
+
+| subfield | rate | 95% CI | vs base |
+|---|---|---|---|
+| dialogue_qa | 33.80% | [31.30, 36.37] | above |
+| summarization | 33.56% | [29.20, 38.16] | above |
+| retrieval_search | 26.48% | [20.55, 32.42] | ns |
+| information_extraction | 24.70% | [22.23, 27.26] | above |
+| machine_translation | 23.75% | [21.69, 25.87] | above |
+| speech_asr | 22.43% | [18.07, 27.10] | **ns** |
+| parsing_syntax | 17.21% | [15.63, 18.83] | below |
+| sentiment_emotion | 16.06% | [13.78, 18.35] | below |
+| speaker_id_voice | 13.33% | [0.00, 33.33] | n=15, no information |
+| authorship_stylometry | 10.38% | [4.72, 16.04] | below |
+
+Censoring matters a lot: `speech_asr` moves from 5.29% (significantly below) to
+22.43% (indistinguishable from average) once right-censored papers are dropped.
+**The pooled rates in the previous entry should not be quoted.** Primary
+specification is now papers <= 2019; the pooled table is descriptive only.
+
+`speaker_id_voice` has 15 papers in the censored ACL corpus. It will never
+support a claim here. The off-corpus speech arm is the only route to that
+subfield, and it needs the same age censoring before it is compared to anything.
+
+**Spend:** $0.00.
