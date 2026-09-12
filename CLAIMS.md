@@ -74,3 +74,19 @@ Primary specification is **assignee-redacted** (rubric v1.2). All classified rat
 **Withdrawn:** positive control 6/7 (circular); redaction test 0/60 (uninformative);
 H1 `***` flags (bootstrap artifact); in-text ablation as support; 1.02% as headline
 (assignee-biased).
+
+---
+
+## STATUS UPDATE — 2026-09-12 (later): grant-date sampling bias
+
+Both classified arms were fetched in sorted patent-id order and stopped partway, which
+truncated them by grant date. See LOG.md. Until random-order fetches finish:
+
+| # | Claim | Status |
+|---|---|---|
+| C5 | 0.69% surveillance | ❌ **withdrawn as a population estimate** — classified set is grants mid-2018 to 2023 only. Seed-42 subset 7/867 = 0.81%, also truncated |
+| C7 | control comparison | ❌ **withdrawn** — classified control is 0.3% pre-2018 vs 62.5% in its sample |
+| C6c | H1, 0 of 10 subfields | ⚠️ rerun required on representative labels |
+| C8 | H2 trend | ⚠️ rerun required; 2015–2017 absent from current data |
+| C14 | IPC, 2 of 26 | ⚠️ rerun required; not human-validated |
+| C15 | redaction, 4 of 16 flip | ✅ holds in kind (within-patent comparison) |

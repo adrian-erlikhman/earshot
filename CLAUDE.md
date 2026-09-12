@@ -104,3 +104,11 @@ Later stages land here as they are written (`src/join_openalex.py`,
   (see `DECISION.md` appendix).
 - Bootstrap 95% CIs, chance/majority baselines, ≥1 ablation, null results reported straight.
 - Raw data is gitignored; `data/interim/` is regenerable from `src/`.
+
+### Sampling gotcha (2026-09-12)
+
+Never fetch patent metadata in sorted-id order and stop partway. As strings,
+"US10..." sorts before "US9...", so a partial run silently drops whole grant years —
+this made both classified arms unrepresentative. Fetch order is now randomized.
+Before quoting any classified rate, check the grant-year mix of the classified set
+against the population with `tools/check_abstract.py`.

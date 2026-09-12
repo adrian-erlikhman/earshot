@@ -235,7 +235,7 @@ def main() -> None:
     recs: list[dict] = []
     t0 = time.time()
     with ThreadPoolExecutor(max_workers=a.workers) as ex:
-        futs = {ex.submit(one, p, a.delay, a.source): p for p in pids}
+        futs = {ex.submit(one, p, a.delay, a.source): p for p in random.Random(a.seed + 1).sample(pids, len(pids))}
         for n, fu in enumerate(as_completed(futs), 1):
             r = fu.result()
             if r and not r.get("_miss"):
