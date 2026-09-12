@@ -1,8 +1,16 @@
+# Raw + intermediate data: large, regenerable from src/. Never committed.
 data/raw/
 data/interim/
-*.csv
-!configs/*.csv
+
+# Secrets
 .env
+.env.local
+
+# Python
 __pycache__/
 *.pyc
-.cache/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Results ARE committed (they are the paper's evidence) except anything huge
+results/*.parquet
