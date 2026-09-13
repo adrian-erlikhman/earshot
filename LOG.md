@@ -593,3 +593,74 @@ sample of 2,500, reusing cache), then control (2,500).
 examiner IPC classes were. "Systematically overcount" rests on 26 examiner-class
 patents whose labels are not yet human-validated. Both need to come out of the draft
 or be tested.
+
+## 2026-09-12 (Sat, night) — representative samples, era matching, final numbers
+
+### Random-order refetch finished
+Treatment: the seed-42 sample of 2,500 is fully fetched. 2,374 classified; 125 are
+pre-grant application publications and 1 is a fetch failure. Control: 2,241 of 2,500
+classified; 257 are application publications. `tools/check_abstract.py` confirms the
+classified treatment sample now matches the population: 27.2% granted before mid-2018,
+against 26.0% of all 9,048. The primary `results/patent_labels.csv` holds the seed-42
+sample only; the full fetch is kept as `patent_labels_all_fetched.csv`.
+
+### Two data facts that were wrong
+- **Every 404 is a pre-grant application publication** (treatment 125 of 125, control
+  257 of 257). The text source serves granted patents only, so the classified sets are
+  granted patents. Application publications are 487 of the 9,048 treatment records (5.4%)
+  and 257 of the 2,500 control sample.
+- **Reliance on Science v65 is not limited to 2015–2025 grants.** The treatment
+  population includes 17% granted 1976–2014, and the control sample includes patents
+  granted before 1976. The earlier description, repeated in CLAUDE.md, BRIEF and refs.bib,
+  was false and is corrected.
+
+### Grant era confounds the arm comparison
+Surveillance-classified patents are recent. NLP-citing patents are recent (58% granted
+May 2021 or later) while science-citing patents skew old (44% granted 1976–2014, 4%
+before 1976). `src/compare_arms.py` stratifies by era:
+
+| era | NLP-citing | science-citing |
+|---|---|---|
+| 1976–2014 | 0 / 417 | 2 / 1,110 |
+| 2015 – May 2021 | 3 / 634 (0.47%) | 2 / 616 (0.32%) |
+| May 2021+ | 8 / 1,322 (0.61%) | 2 / 386 (0.52%) |
+
+- treatment 11 / 2,374 = **0.46%** [0.25, 0.80]; control crude 6 / 2,241 = 0.27%
+- control reweighted to the treatment era mix: **0.41%**
+- **Mantel–Haenszel pooled OR 1.03 [0.38, 2.78], p = 0.95**; common-window Fisher p = 0.47
+
+The crude gap was grant era. `analysis.py` still prints a crude risk ratio (2.11), now
+labelled era-confounded; report `compare_arms.py` instead.
+
+### Other results on the representative sample
+- H1: **0 of 10** subfields significant under Fisher exact + Benjamini–Hochberg (min q 0.83).
+- H2: 0.00% (2015–17, n=194), 0.83% (2018–20), 0.66% (2021–23), 0.47% (2024–26). No trend.
+- In-text ablation: 0 of 292, CI [0, 0.86] — still includes the overall rate; not support.
+- Military: 1 of 2,374 treatment vs 6 of 2,241 control; military labels are highly
+  assignee-sensitive (below), so treat with care.
+- Surveillance owners: Microsoft 2, ETS 2, HRL, Conduent, IBM, PayPal, ClearCare, Discord,
+  Zignal Labs. The HRL civil-unrest patent is still labelled surveillance.
+
+### Applicant-name bias runs in both directions
+`src/redaction_test.py` on the representative labels, 99 patents targeted:
+- redacted re-call reproduces the primary label 99 / 99 (deterministic)
+- **10 of 31 non-neutral labels flip (32%)**; 17 of 99 overall; 8 of 71 defence-sounding
+- 7 flagged-with-name became neutral when hidden, 6 of them military: defence-sounding
+  applicants inflate military labels
+- 9 neutral-with-name became flagged when hidden: large consumer-technology and healthcare
+  names suppress flags
+The earlier "4 of 16 (25%), over-labelling" came from the truncated set and is replaced.
+
+### Examiner classes: reworded, not yet validated
+69 patents sit in surveillance-related IPC classes: 2 surveillance, 3 dual-use, 64
+neither. Of the 64, 46 carry G10L17 and 29 have voice- or digital-assistant titles —
+nearly half, not "most". Examiners assign technology classes and never judged these to be
+surveillance; the finding is that using those classes as a surveillance proxy overcounts.
+Not human-validated.
+
+### Gold set
+Built before the sampling fix, so its 200 items skew toward 2018–2023 grants. The labels
+for those items are unchanged (cached, deterministic). It remains valid for measuring
+agreement and is not used for population rates.
+
+**Spend:** under $1.50.

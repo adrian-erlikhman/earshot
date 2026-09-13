@@ -104,7 +104,7 @@ def main() -> None:
     print("=" * 74)
     print(f"COVERAGE  {lab_pat:,} of {all_pat:,} citing patents classified ({100*cov:.1f}%)")
     if cov < 0.95:
-        print("  *** PARTIAL. Every rate below is provisional and must not be quoted. ***")
+        print("  NOTE: classified set is the seed-42 random sample of 2,500 (granted patents only). Rates are sample estimates with exact intervals, not a census.")
     print("=" * 74)
 
     lab = labels.dropna(subset=["label"]).drop_duplicates("patent_norm")
@@ -156,7 +156,7 @@ def main() -> None:
             print(f"   Fisher exact p = {pv:.4g}   {'SIGNIFICANT' if pv<0.05 else 'not significant'}")
         except Exception:
             pass
-        print("   NOTE: control is 'the average science-citing USPTO patent', NOT field-matched.")
+        print("   NOTE: control is 'the average science-citing USPTO patent', NOT field-matched. CRUDE and era-confounded: report src/compare_arms.py (Mantel-Haenszel) instead.")
     else:
         print("   *** control_labels.csv missing — THE PRE-REGISTERED CONTROL HAS NOT RUN. ***")
         print("   Without it the headline rate is uninterpretable. Do not draft around it.")

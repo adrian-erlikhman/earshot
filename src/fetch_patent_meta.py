@@ -238,7 +238,7 @@ def main() -> None:
         futs = {ex.submit(one, p, a.delay, a.source): p for p in random.Random(a.seed + 1).sample(pids, len(pids))}
         for n, fu in enumerate(as_completed(futs), 1):
             r = fu.result()
-            if r and not r.get("_miss"):
+            if r and not r.get("_miss") and not r.get("_absent"):
                 recs.append(r)
             if n % 250 == 0:
                 el = time.time() - t0

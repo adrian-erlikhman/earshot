@@ -1,27 +1,100 @@
 arm,orig,shown,hidden,nonneither,defense,assignee,title,consistent,flipped
-treatment,surveillance,surveillance,dual_use_ambiguous,True,False,Nec Corporation, Video system using dual stage attention based recurrent neural network for &hellip;,True,True
 treatment,surveillance,surveillance,surveillance,True,True,"HRL Laboratories, LLC",Social media mining system for early detection of civil unrest events,True,False
+treatment,surveillance,neither,surveillance,True,False,"Microsoft Technology Licensing, LLC",Computationally-efficient human-identifying smart assistant computer,False,True
 treatment,surveillance,surveillance,surveillance,True,False,"Microsoft Technology Licensing, LLC",Intelligent assistant,True,False
-treatment,surveillance,surveillance,surveillance,True,False,"Microsoft Technology Licensing, LLC",Computationally-efficient human-identifying smart assistant computer,True,False
-treatment,dual_use_ambiguous,dual_use_ambiguous,surveillance,True,False,THE BOEING COMPANY,Automated object and activity tracking in a live video feed,True,True
-treatment,surveillance,surveillance,surveillance,True,False,"Microsoft Technology Licensing, LLC",Entity-tracking computing system,True,False
-treatment,surveillance,surveillance,surveillance,True,False,"NEC Laboratories America, Inc.",Video camera device and system using recursive neural networks for future event prediction,True,False
+treatment,dual_use_ambiguous,dual_use_ambiguous,dual_use_ambiguous,True,False,"Microsoft Technology Licensing, LLC",Entity-tracking computing system,True,False
+treatment,dual_use_ambiguous,dual_use_ambiguous,dual_use_ambiguous,True,False,"NEC Laboratories America, Inc.",Video camera device and system using recursive neural networks for future event prediction,True,False
 treatment,neither,neither,neither,False,True,"HRL Laboratories, LLC",Per-user accuracy measure for social network based geocoding algorithms,True,False
 treatment,surveillance,surveillance,surveillance,True,False,"CONDUENT BUSINESS SERVICES, LLC",Neural network systems and methods for target identification from text,True,False
 treatment,surveillance,surveillance,surveillance,True,False,INTERNATIONAL BUSINESS MACHINES CORPORATION,Neural mapping,True,False
 treatment,surveillance,surveillance,surveillance,True,False,Educational Testing Service,Systems and methods for automatic detection of plagiarized spoken responses,True,False
 treatment,dual_use_ambiguous,dual_use_ambiguous,dual_use_ambiguous,True,False,"Cisco Technology, Inc.",Video analysis using a deep fusion reasoning engine (DFRE),True,False
-treatment,surveillance,surveillance,surveillance,True,False,Arizona Board of Regents on Behalf of Arizona State University,Method and apparatus for detecting fake news in a social media network,True,False
 treatment,neither,neither,neither,False,True,NATIONAL UNIVERSITY OF DEFENSE TECHNOLOGY,Device and text representation method applied to sentence embedding,True,False
 treatment,neither,neither,neither,False,True,National University of Defense Technology,"Fact validation method and system, computer device and storage medium",True,False
-control,military_defense,military_defense,neither,True,True,"INSTITUTE OF MICROBIOLOGY AND EPIDEMIOLOGY, ACADEMY OF MILITARY MEDICAL SCIENCES, PR CHINA THE SECOND MILITARY MEDICAL UNIVERSITY",Mercaptonicotinic acid compound and preparation method and use thereof,True,True
+treatment,surveillance,surveillance,surveillance,True,False,"PAYPAL, INC.",Intelligent analysis of digital symbols for message content determination,True,False
+treatment,surveillance,surveillance,surveillance,True,False,"c/o ClearCare, Inc.",Automatic in-home senior care system augmented with internet of things technologies,True,False
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,Computer implemented method for the automated analysis or use of data,True,False
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,***WITHDRAWN PATENT AS PER THE LATEST USPTO WITHDRAWN LIST***Computer implemented method for the automated analysis or use of data,True,False
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,***WITHDRAWN PATENT AS PER THE LATEST USPTO WITHDRAWN LIST***Computer implemented method for the automated analysis or use of data,True,False
+treatment,surveillance,surveillance,surveillance,True,False,Educational Testing Service,Automatic evaluation of argumentative writing by young students,True,False
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,***WITHDRAWN PATENT AS PER THE LATEST USPTO WITHDRAWN LIST***Computer implemented method for the automated analysis or use of data,True,False
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,***WITHDRAWN PATENT AS PER THE LATEST USPTO WITHDRAWN LIST***Computer implemented method for the automated analysis or use of data,True,False
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,***WITHDRAWN PATENT AS PER THE LATEST USPTO WITHDRAWN LIST***Computer implemented method for the automated analysis or use of data,True,False
+treatment,neither,military_defense,neither,False,True,National University of Defense Technology,Counterfactual context-aware texture learning for camouflaged object detection,False,True
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,***WITHDRAWN PATENT AS PER THE LATEST USPTO WITHDRAWN LIST***Computer implemented method for the automated analysis or use of data,True,False
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,"Computer implemented method for the automated analysis or use of data applied to a query answer system with a shared syntax applied to the query, factual statements and reasoning",True,False
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,***WITHDRAWN PATENT AS PER THE LATEST USPTO WITHDRAWN LIST***Computer implemented method for the automated analysis or use of data,True,False
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,***WITHDRAWN PATENT AS PER THE LATEST USPTO WITHDRAWN LIST***Computer implemented method for the automated analysis or use of data,True,False
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,***WITHDRAWN PATENT AS PER THE LATEST USPTO WITHDRAWN LIST***Computer implemented method for the automated analysis or use of data,True,False
+treatment,neither,neither,neither,False,True,"Leidos, Inc.",Method and system for accelerating rapid class augmentation for object detection in deep neural networks,True,False
+treatment,surveillance,surveillance,surveillance,True,False,Discord Inc.,Detecting online contextual evolution of linguistic terms,True,False
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,***WITHDRAWN PATENT AS PER THE LATEST USPTO WITHDRAWN LIST***Computer implemented method for the automated analysis or use of data,True,False
+treatment,military_defense,military_defense,military_defense,True,False,The Boeing Company,Dialogue system for autonomous aircraft,True,False
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,Computer implemented method for the automated analysis or use of data,True,False
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,Computer implemented method for the automated analysis or use of data,True,False
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,Computer implemented method for the automated analysis or use of data,True,False
+treatment,surveillance,surveillance,surveillance,True,False,"ZIGNAL LABS, INC.",System and method for social network analysis,True,False
+treatment,neither,neither,neither,False,True,National University of Defense Technology,"Method and apparatus for few-shot relation classification and filtering, and device",True,False
+treatment,neither,neither,neither,False,True,Centre for Perceptual and Interactive Intelligence (CPII) Limited,"Grounded dialogue generation with cross-encoding re-ranker, grounding span prediction, and passage dropout",True,False
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,"Computer implemented methods for the automated analysis or use of data, including use of a large language model",True,False
+treatment,neither,neither,neither,False,True,The MITRE Coporation,Artificial intelligence-based engineering requirements analysis,True,False
+treatment,neither,neither,neither,False,True,National University of Defense Technology,Method and apparatus for training few-shot event detection model based on multilingual prompt learning,True,False
+treatment,neither,neither,neither,False,True,UNLIKELY ARTIFICIAL INTELLIGENCE LIMITED,Computer implemented method for the automated analysis or use of data,True,False
+treatment,neither,neither,neither,False,True,Lockheed Martin Corporation,Natural-language information processor with association searches limited within blocks,True,False
+treatment,neither,neither,neither,False,True,Raytheon BBN Technologies Corp.,Semantic matching using predicate-argument structure,True,False
+treatment,neither,neither,neither,False,True,RAYTHEON BBN Technologies Corp.,Machine translation,True,False
+treatment,neither,neither,neither,False,True,"Machine Intelligence Services, Inc.",Customizable answer engine implemented by user-defined plug-ins,True,False
+treatment,neither,neither,neither,False,True,Raytheon Company The Penn State Research Foundation,Systems and methods for news event organization,True,False
+treatment,neither,surveillance,neither,False,True,"HRL Laboratories, LLC",Tracking and prediction of societal event trends using amplified signals extracted from social media,False,True
+control,neither,military_defense,neither,False,True,"INSTITUTE OF MICROBIOLOGY AND EPIDEMIOLOGY, ACADEMY OF MILITARY MEDICAL SCIENCES, PR CHINA THE SECOND MILITARY MEDICAL UNIVERSITY",Mercaptonicotinic acid compound and preparation method and use thereof,False,True
 control,neither,neither,neither,False,True,THALES,Electrode-gel electrolyte assembly comprising a porous carbon material and obtained by radical polymerisation,True,False
 control,neither,neither,neither,False,True,"Lawrence Livermore National Security, LLC",Ultra low noise materials and devices for cryogenic superconductors and quantum bits,True,False
 control,neither,neither,neither,False,True,"The Henry M. Jackson Foundation for the Advancement of Military Medicine, Inc.",Methods for the measurement of post-traumatic stress disorder microRNA markers,True,False
 control,neither,neither,neither,False,True,Lockheed Martin Corporation,Antenna array calibration,True,False
-control,military_defense,military_defense,military_defense,True,True,Thales,"Method for detecting targets on the ground and in motion, in a video stream acquired with an airborne camera",True,False
-control,military_defense,military_defense,neither,True,True,"Triad National Security, LLC",Non-harmful insertion of data mimicking computer network attacks,True,True
+control,dual_use_ambiguous,military_defense,dual_use_ambiguous,True,True,Thales,"Method for detecting targets on the ground and in motion, in a video stream acquired with an airborne camera",False,True
+control,military_defense,neither,military_defense,True,False,NXP B.V.,Platoon control,False,True
+control,neither,military_defense,neither,False,True,"Triad National Security, LLC",Non-harmful insertion of data mimicking computer network attacks,False,True
 control,neither,neither,neither,False,True,"The Government of the United States of America, as represented by the Secretary of the Navy",Methane/oxygen rocket engine with specific impulse enhancement by hot helium infusion,True,False
-control,surveillance,surveillance,surveillance,True,True,Palantir Technologies Inc.,Context-aware network-based malicious activity warning systems,True,False
+control,neither,neither,neither,False,True,Palantir Technologies Inc.,Context-aware network-based malicious activity warning systems,True,False
 control,neither,neither,neither,False,True,"National Technology & Engineering Solutions of Sandia, LLC",Block copolymers including poly(phenylene) and methods thereof,True,False
 control,neither,neither,neither,False,True,Airbus Defence and Space GmbH,Simulation of a complex system,True,False
+control,surveillance,surveillance,surveillance,True,False,VERIZON MEDIA INC.,Social network for monitoring user activity,True,False
+control,neither,neither,neither,False,True,"Lawrence Livermore National Security, LLC","Ultra-compact system for characterization of physical, chemical and ignition properties of fuels",True,False
+control,neither,neither,neither,False,True,Airbus Defence and Space GmbH,Scandium-containing aluminium alloy for powder metallurgical technologies,True,False
+control,neither,neither,neither,False,True,NORTHROP GRUMMAN SYSTEMS CORPORATION,Superconducting AC switch system,True,False
+control,surveillance,surveillance,surveillance,True,False,International Electronic Machines Corp.,Sensitive area management,True,False
+control,dual_use_ambiguous,neither,dual_use_ambiguous,True,False,"Matroid, Inc.",Detecting content in a real-time video stream recorded by a detection unit,False,True
+control,neither,neither,neither,False,True,Raytheon Company,Rule-based environmental condition impact assessments,True,False
+control,military_defense,military_defense,military_defense,True,False,UNIVERSITY OF SCIENCE AND TECHNOLOGY OF CHINA,"Method for correcting differential pressure values, device and analyzer for analyzing concentration thereof",True,False
+control,neither,neither,neither,False,True,National Defense Medical University,"Method for ameliorating progression of renal fibrosis and treating renal fibrosis by 5-(2′,4′-difluorophenyl)-salicylanilide derivatives",True,False
+control,neither,neither,neither,False,True,The United States of America as represented by the Secretary of the Army,EBS Device with cold-cathode,True,False
+control,military_defense,military_defense,military_defense,True,True,The United States of America as represented by the Secretary of the Navy,Broadband sonar signal processor and target recognition system,True,False
+control,neither,neither,neither,False,True,"General Dynamics, Corp Pomona Division",Method for fabricating a dichroic parabolic lens reflector,True,False
+control,neither,military_defense,neither,False,True,The United States of America as represented by the Secretary of the Navy,Planar fiber-optic interferometric acoustic sensor,False,True
+control,neither,neither,neither,False,True,The United States of America as represented by the Secretary of the Navy,Optics for diode array transverse pumped laser rod,True,False
+control,military_defense,military_defense,military_defense,True,False,The United States of America as represented by the Secretary of the Air,Ear canal pulse/oxygen saturation measuring device,True,False
+control,dual_use_ambiguous,neither,dual_use_ambiguous,True,False,Mitsubishi Denki Kabushiki Kaisha,Image tracking device and image tracking method,False,True
+control,surveillance,neither,surveillance,True,False,"Seiko Epson Corporation A. I. Soft, Inc.",Facial image processing method and apparatus,False,True
+control,neither,neither,neither,False,True,Northrop Grumman Corporation,Ultra-low power-delay product NNN/PPP logic devices,True,False
+control,neither,neither,neither,False,True,Sandia Corporation,Method and apparatus for monitoring plasma processing operations,True,False
+control,neither,neither,neither,False,True,Sandia Corporation,Control of reflected electromagnetic fields at an IFSAR antenna,True,False
+control,neither,neither,neither,False,True,Sandia Corporation,Method for chemical sensing using a microfabricated teeter-totter resonator,True,False
+control,neither,neither,neither,False,True,United States of America as Represented by the Secretary of the Army,"Antimalarial and antiproliferative pharmacophore models, novel tryptanthrin compounds having increased solubility, and methods of making and using thereof",True,False
+control,military_defense,neither,military_defense,True,False,"Geodynamics, Inc.",Use of aluminum in perforating and stimulating a subterranean formation and other engineering applications,False,True
+control,neither,military_defense,neither,False,True,"Her Majesty the Queen in right of Canada, as represented by the Minister of National Defence",Directional gamma ray probe,False,True
+control,neither,neither,neither,False,True,Northrop Grumman Systems Corporation,Arbitrary quantum operations with a common coupled resonator,True,False
+control,neither,neither,neither,False,True,The United States of America as represented by the Secretary of the Army,Systems and methods for collecting particles from a large volume of gas into a small volume of liquid,True,False
+control,neither,neither,neither,False,True,Sandia Corporation,Method for voltage-gated protein fractionation,True,False
+control,neither,neither,neither,False,True,"The United States of America, as represented by the Secretary of the Navy",Reduced graphene oxide film,True,False
+control,neither,neither,neither,False,True,Sandia Corporation,Method for synthesizing carbon nanotubes,True,False
+control,neither,neither,neither,False,True,The United States of America as represented by the Secretary of the Navy,Direct extrusion method for the fabrication of photonic band gap (PBG) fibers and fiber preforms,True,False
+control,surveillance,neither,surveillance,True,False,"Roche Diagnostics Operations, Inc.","Collection device with selective display of test results, method and computer program product thereof",False,True
+control,neither,neither,neither,False,True,"HRL Laboratories, LLC",Apparatus for mounting microelectronic chips,True,False
+control,neither,neither,neither,False,True,The United States of America as represented by the Secretary of the Navy,Adenoviral vector-based malaria vaccines,True,False
+control,neither,military_defense,neither,False,True,The United States of America as represented by the Secretary of the Navy,Spherical modular autonomous robotic traveler,False,True
+control,dual_use_ambiguous,neither,dual_use_ambiguous,True,False,GOOGLE INC.,Systems and methods for analyzing a video stream,False,True
+control,surveillance,surveillance,surveillance,True,False,Google Inc.,Techniques for enabling or establishing the use of face recognition algorithms,True,False
+control,military_defense,military_defense,military_defense,True,False,"Digital Ally, Inc.",Wirelessly conducted electronic weapon,True,False
+control,neither,neither,neither,False,True,"National Technology & Engineering Solutions of Sandia, LLC",Processor-in-memory-and-storage architecture,True,False
+control,surveillance,neither,surveillance,True,False,International Business Machines Corporation,Inferring user intentions based on user conversation data and spatio-temporal data,False,True
+control,neither,neither,neither,False,True,Palantir Technologies Inc.,Simplified frontend processing and visualization of large datasets,True,False

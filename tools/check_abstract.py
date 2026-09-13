@@ -38,7 +38,7 @@ def main() -> None:
           f"{'OVER by ' + str(len(TLDR) - 300) if len(TLDR) > 300 else 'fits, ' + str(300 - len(TLDR)) + ' spare'}")
     print(f"title    : {len(TITLE)} chars")
 
-    print("\n=== 2. IS THE 0.69% SAMPLE REPRESENTATIVE? ===")
+    print("\n=== 2. IS THE CLASSIFIED SAMPLE REPRESENTATIVE? ===")
     links = pd.read_csv(ROOT / "results" / "patent_links.csv", low_memory=False)
     allp = sorted({norm(p) for p in links["patent"].dropna().unique()})
     lab = pd.read_csv(ROOT / "results" / "patent_labels.csv")
@@ -62,7 +62,7 @@ def main() -> None:
     s_lab, n_lab = share_pre2018(labp)
     print(f"\nshare with patent number < 10,000,000 (granted before ~June 2018):")
     print(f"  all 9,048 citing patents : {100*s_all:5.1f}%  (n={n_all:,})")
-    print(f"  classified 1,012         : {100*s_lab:5.1f}%  (n={n_lab:,})")
+    print(f"  classified sample        : {100*s_lab:5.1f}%  (n={n_lab:,})")
 
     yrs = pd.to_datetime(lab["grant_date"], errors="coerce", format="mixed").dt.year
     print("\ngrant years in the classified set:")

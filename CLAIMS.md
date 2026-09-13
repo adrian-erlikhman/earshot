@@ -90,3 +90,29 @@ truncated them by grant date. See LOG.md. Until random-order fetches finish:
 | C8 | H2 trend | ⚠️ rerun required; 2015–2017 absent from current data |
 | C14 | IPC, 2 of 26 | ⚠️ rerun required; not human-validated |
 | C15 | redaction, 4 of 16 flip | ✅ holds in kind (within-patent comparison) |
+
+---
+
+## FINAL STATUS — 2026-09-12 (night): representative samples
+
+Supersedes every conflicting row above. Treatment = seed-42 random sample; control =
+uniform sample; both assignee-redacted; granted patents only. Checked against the results
+files by `tools/verify_brief.py`.
+
+| # | Claim | Value | Script | Results | Status |
+|---|---|---|---|---|---|
+| C5 | Surveillance share, NLP-citing patents | **11 / 2,374 = 0.46%** [0.25, 0.80] | `compare_arms.py` | `compare_arms.json` | ✅ |
+| C7 | Era-matched treatment vs control | **MH OR 1.03 [0.38, 2.78], p = 0.95**; control reweighted 0.41% | `compare_arms.py` | `compare_arms.json` | ✅ bound, not null |
+| C7x | Crude control comparison | 0.27%, RR 2.11 | `analysis.py` | `analysis.json` | ❌ era-confounded, never quote |
+| C6c | H1 by subfield | 0 of 10, BH q < 0.05 | `analysis.py` | `analysis.json` | ✅ |
+| C8 | H2 by grant year | no trend | `analysis.py` | `analysis.json` | ✅ |
+| C13 | In-text ablation | 0 / 292 [0, 0.86] | `analysis.py` | `analysis.json` | ⚠️ not support |
+| C14 | Examiner classes | 69 patents: 2 surveillance, 3 dual-use, 64 neither | `analysis.py` | `analysis.json` | 🟡 pending human validation |
+| C15 | Applicant-name bias | **10 / 31 non-neutral flip (32%)**, both directions | `redaction_test.py` | `redaction_test.csv` | ✅ |
+| C16 | ACL-citing share of RoS records | 9,048 / 2,748,170 = 0.33% | `build_control.py` | `control_meta.json` | ✅ |
+| C17 | Record types, treatment population | 8,553 granted, 487 application publications, 8 other | `compare_arms.py` | `compare_arms.json` | ✅ |
+| C11/C12 | Human agreement | pending coding, Sun 13 Sept | `agreement.py` | `agreement.json` | ⬜ |
+
+**Withdrawn:** 0.69%, 1.02%, 0.81% (truncated samples); control 0.27% with RR 1.95 or 2.11
+(crude); 4 of 16 flips (truncated); 21 of 26 examiner-class (truncated); "2015–2025 grants"
+(false); positive control 6/7; redaction 0/60; in-text ablation as support.

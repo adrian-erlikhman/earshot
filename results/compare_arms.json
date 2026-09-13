@@ -1,0 +1,141 @@
+{
+  "n_treatment": 2374,
+  "n_control": 2241,
+  "per_era": {
+    "pre-1976": {
+      "control": {
+        "k": 0,
+        "n": 102,
+        "rate": 0.0
+      }
+    },
+    "1976-2014": {
+      "treatment": {
+        "k": 0,
+        "n": 417,
+        "rate": 0.0
+      },
+      "control": {
+        "k": 2,
+        "n": 1110,
+        "rate": 0.0018018018018018018
+      }
+    },
+    "2015-May2021": {
+      "treatment": {
+        "k": 3,
+        "n": 634,
+        "rate": 0.00473186119873817
+      },
+      "control": {
+        "k": 2,
+        "n": 616,
+        "rate": 0.003246753246753247
+      }
+    },
+    "May2021+": {
+      "treatment": {
+        "k": 8,
+        "n": 1322,
+        "rate": 0.006051437216338881
+      },
+      "control": {
+        "k": 2,
+        "n": 386,
+        "rate": 0.0051813471502590676
+      }
+    },
+    "application": {},
+    "design/other": {
+      "treatment": {
+        "k": 0,
+        "n": 1,
+        "rate": 0.0
+      },
+      "control": {
+        "k": 0,
+        "n": 27,
+        "rate": 0.0
+      }
+    }
+  },
+  "record_types": {
+    "treatment_population": {
+      "granted utility": 8553,
+      "application": 487,
+      "design/other": 8
+    },
+    "control_sample": {
+      "granted utility": 2216,
+      "application": 257,
+      "design/other": 27
+    }
+  },
+  "summary": {
+    "treatment_crude": {
+      "k": 11,
+      "n": 2374,
+      "rate": 0.004633529907329402,
+      "ci": [
+        0.002464202895364547,
+        0.008004880411406798
+      ]
+    },
+    "control_crude": {
+      "k": 6,
+      "n": 2241,
+      "rate": 0.002677376171352075,
+      "ci": [
+        0.0011182735851178363,
+        0.005510423926066768
+      ]
+    },
+    "treatment_window": {
+      "k": 11,
+      "n": 2373,
+      "rate": 0.004635482511588706,
+      "ci": [
+        0.002465242350549108,
+        0.008008247650865155
+      ]
+    },
+    "control_window": {
+      "k": 6,
+      "n": 2112,
+      "rate": 0.002840909090909091,
+      "ci": [
+        0.0011866257549330767,
+        0.005846450566717862
+      ]
+    }
+  },
+  "control_reweighted_to_treatment_era_mix": {
+    "rate": 0.0040688853590713555,
+    "weight_covered": 0.9999999999999999
+  },
+  "fisher_common_window_p": 0.46644042819772696,
+  "mantel_haenszel": {
+    "pooled_or": 1.0326483032361782,
+    "ci": [
+      0.3834625274423998,
+      2.7808780307398795
+    ],
+    "p": 0.9497102212283202,
+    "strata": [
+      "1976-2014",
+      "2015-May2021",
+      "May2021+"
+    ],
+    "continuity": 0.5
+  },
+  "military": {
+    "treatment": {
+      "k": 1,
+      "n": 2374
+    },
+    "control": {
+      "k": 6,
+      "n": 2241
+    }
+  }
+}
